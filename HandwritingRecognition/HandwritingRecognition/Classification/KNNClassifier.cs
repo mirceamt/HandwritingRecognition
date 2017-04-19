@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 // TODO: uncomment these lines
-//using Emgu.CV;
-//using Emgu.CV.ML;
-//using Emgu.Util;
+using Emgu.CV;
+using Emgu.CV.ML;
+using Emgu.Util;
 
 using HandwritingRecognition.ImageProcessing;
 
@@ -32,6 +32,6 @@ namespace HandwritingRecognition.Classification
         }
 
         // TODO: uncomment these lines
-        // private KNearest m_classifier = new KNearest();
+        private KNearest m_classifier = new KNearest();
     }
 }
