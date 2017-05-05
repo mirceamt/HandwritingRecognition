@@ -12,92 +12,12 @@ using System.Windows.Forms;
 using HandwritingRecognition.ImageProcessing;
 using HandwritingRecognition.Debugging;
 
+using HandwritingRecognition.Classification;
+
 namespace HandwritingRecognition
 {
     public partial class Form1 : Form
     {
-        /*
-        Graphics m_graphics;
-        bool m_startPaint = false;
-        Point m_oldPoint = new Point(-1, -1);
-        public Form1()
-        {
-            InitializeComponent();
-            m_graphics = drawPanel.CreateGraphics();
-        }
-
-        private void drawPanel_MouseDown(object sender, MouseEventArgs e)
-        {
-            m_startPaint = true;
-        }
-
-        private void drawPanel_MouseUp(object sender, MouseEventArgs e)
-        {
-            m_startPaint = false;
-            m_oldPoint.X = -1;
-            m_oldPoint.Y = -1;
-        }
-
-        private void drawPanel_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (m_startPaint == true)
-            {
-                Pen pen = new Pen(Color.Black, 4);
-                pen.StartCap = LineCap.Round;
-                pen.EndCap = LineCap.Round;
-                Point currentPoint = new Point(e.X, e.Y);
-                if (m_oldPoint.X == -1 && m_oldPoint.Y == -1)
-                {
-                    this.DrawLineWithMiddlePoint(currentPoint, currentPoint);
-                }
-                else
-                {
-                    //Point[] points = new Point[2];
-                    //points[0] = m_oldPoint;
-                    //points[1] = currentPoint;
-                    //byte[] pointTypes = new byte[2];
-                    //pointTypes[0] = (byte)PathPointType.Start;
-                    //pointTypes[1] = (byte)PathPointType.Line;
-                    //GraphicsPath path = new GraphicsPath(points, pointTypes);
-
-                    this.DrawLineWithMiddlePoint(m_oldPoint, currentPoint);
-                }
-                m_oldPoint = currentPoint;
-            }
-        }
-
-        private void DrawLine(PointF A, PointF B)
-        {
-            Brush brush = new SolidBrush(Color.Black);
-            Pen pen = new Pen(brush, 10);
-            pen.StartCap = LineCap.Round;
-            pen.EndCap = LineCap.Round;
-            m_graphics.DrawLine(pen, A, B);
-        }
-
-        private void DrawLineWithMiddlePoint(PointF A, PointF B)
-        {
-            PointF middlePoint = new PointF((A.X + B.X) / 2, (A.Y + B.Y) / 2);
-            this.DrawLine(A, middlePoint);
-            this.DrawLine(middlePoint, B);
-        }
-
-        private void drawPanel_Paint(object sender, PaintEventArgs e)
-        {
-            Console.Out.Write("yea");
-        }
-
-        private void drawLineButton_Click(object sender, EventArgs e)
-        {
-            PointF startPoint = new PointF(float.Parse(x1TextBox.Text), float.Parse(y1TextBox.Text));
-            PointF endPoint = new PointF(float.Parse(x2TextBox.Text), float.Parse(y2TextBox.Text));
-            this.DrawLine(startPoint, endPoint);
-            
-        }
-        
-
-        */
-
         bool m_canDraw = false;
 
         PointF m_previousPoint = new PointF(-1, -1);
@@ -111,6 +31,11 @@ namespace HandwritingRecognition
         public Form1()
         {
             InitializeComponent();
+
+            ClassifyTool classifyTool = ClassifyTool.Instance;
+            classifyTool.TrainKNN(@"F:\Processed Images\32x32");
+            //classifyTool.TrainTestKNN();
+
             m_connectedComponents = new List<ConnectedComponent>();
             this.m_auxiliaryBitmap = new Bitmap(drawPanel.Width, drawPanel.Height, drawPanel.CreateGraphics());
             Graphics.FromImage(m_auxiliaryBitmap).Clear(Color.White);

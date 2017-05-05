@@ -14,7 +14,7 @@ namespace HandwritingRecognition.Classification
 
         private ClassifyTool() { }
 
-        public ClassifyTool Instance
+        public static ClassifyTool Instance
         {
             get
             {
@@ -32,6 +32,20 @@ namespace HandwritingRecognition.Classification
             // TODO
             return "";
         }
+
+        #region Testing
+
+        public void TrainTestKNN()
+        {
+            m_knnClassifier.TrainTest();
+        }
+
+        public float PredictTestKNN(float x, float y)
+        {
+            return m_knnClassifier.PredictTest(x, y);
+        }
+
+        #endregion
 
         private KNNClassifier m_knnClassifier = new KNNClassifier();
 
