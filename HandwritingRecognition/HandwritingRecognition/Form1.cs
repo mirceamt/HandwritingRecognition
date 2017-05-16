@@ -11,8 +11,8 @@ using System.Windows.Forms;
 
 using HandwritingRecognition.ImageProcessing;
 using HandwritingRecognition.Debugging;
-
 using HandwritingRecognition.Classification;
+using HandwritingRecognition.Communication;
 
 namespace HandwritingRecognition
 {
@@ -32,9 +32,12 @@ namespace HandwritingRecognition
         {
             InitializeComponent();
 
-            ClassifyTool classifyTool = ClassifyTool.Instance;
-            classifyTool.TrainKNN(@"F:\Processed Images\32x32");
+            //ClassifyTool classifyTool = ClassifyTool.Instance;
+            //classifyTool.TrainKNN(@"F:\Processed Images\32x32");
             //classifyTool.TrainTestKNN();
+
+            ApplicationStarter.StartPythonClient();
+            
 
             m_connectedComponents = new List<ConnectedComponent>();
             this.m_auxiliaryBitmap = new Bitmap(drawPanel.Width, drawPanel.Height, drawPanel.CreateGraphics());
