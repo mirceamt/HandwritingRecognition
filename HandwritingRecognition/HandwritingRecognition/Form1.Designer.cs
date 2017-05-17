@@ -40,6 +40,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.clearButton = new System.Windows.Forms.Button();
             this.testConnectedComponentsWindowButton = new System.Windows.Forms.Button();
+            this.sendBytesToPythonDebugButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // drawPanel
@@ -148,11 +149,22 @@
             this.testConnectedComponentsWindowButton.UseVisualStyleBackColor = true;
             this.testConnectedComponentsWindowButton.Click += new System.EventHandler(this.testConnectedComponentsWindowButton_Click);
             // 
+            // sendBytesToPythonDebugButton
+            // 
+            this.sendBytesToPythonDebugButton.Location = new System.Drawing.Point(13, 206);
+            this.sendBytesToPythonDebugButton.Name = "sendBytesToPythonDebugButton";
+            this.sendBytesToPythonDebugButton.Size = new System.Drawing.Size(142, 35);
+            this.sendBytesToPythonDebugButton.TabIndex = 14;
+            this.sendBytesToPythonDebugButton.Text = "Send Bytes To Python";
+            this.sendBytesToPythonDebugButton.UseVisualStyleBackColor = true;
+            this.sendBytesToPythonDebugButton.Click += new System.EventHandler(this.sendBytesToPythonDebugButton_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(884, 561);
+            this.Controls.Add(this.sendBytesToPythonDebugButton);
             this.Controls.Add(this.testConnectedComponentsWindowButton);
             this.Controls.Add(this.clearButton);
             this.Controls.Add(this.label4);
@@ -186,6 +198,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button clearButton;
         private System.Windows.Forms.Button testConnectedComponentsWindowButton;
+        private System.Windows.Forms.Button sendBytesToPythonDebugButton;
     }
 }
 

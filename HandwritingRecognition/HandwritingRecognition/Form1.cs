@@ -37,9 +37,13 @@ namespace HandwritingRecognition
             //classifyTool.TrainKNN(@"F:\Processed Images\32x32");
             //classifyTool.TrainTestKNN();
 
-            ApplicationStarter.StartPythonClient();
+            //ApplicationStarter.StartPythonClient();
+
             ApplicationUseManager appUseManagerInstance = ApplicationUseManager.Instance;
             appUseManagerInstance.TriggerApplicationNotReady();
+
+            ConnectionManager.StartListeningToConnections();
+            
             
 
             m_connectedComponents = new List<ConnectedComponent>();
@@ -108,8 +112,6 @@ namespace HandwritingRecognition
             }
         }
 
-
-
         private void clearButton_Click(object sender, EventArgs e)
         {
             Graphics.FromImage(m_auxiliaryBitmap).Clear(Color.White);
@@ -123,6 +125,14 @@ namespace HandwritingRecognition
             DebugConnectedComponentsTool.DisplayConnectedComponentsInNewWindow(this.ConnectedComponents);
         }
 
-
+        private void sendBytesToPythonDebugButton_Click(object sender, EventArgs e)
+        {
+            byte[] bytesToSend = new byte[10];
+            for (int i = 0; i < 10; i++)
+            {
+                bytesToSend[i] = (byte)i;
+            }
+            ConnectionManager.SendBytes(bytesToSend);
+        }
     }
 }

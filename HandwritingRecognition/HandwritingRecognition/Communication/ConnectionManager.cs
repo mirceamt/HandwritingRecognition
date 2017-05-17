@@ -21,6 +21,7 @@ namespace HandwritingRecognition.Communication
 
         private static void ListenToConnectionsOnAnotherThread()
         {
+            tcpListener.Start();
             socket = tcpListener.AcceptSocket();
             connected = true;
         }
@@ -30,7 +31,11 @@ namespace HandwritingRecognition.Communication
             tcpListener = new TcpListener(address, port);
             Thread th = new Thread(new ThreadStart(ListenToConnectionsOnAnotherThread));
             th.Start();
+        }
 
+        public static void SendBytes(byte[] bytesToSend)
+        {
+            socket.Send(bytesToSend);
         }
     }
 }
