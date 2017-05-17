@@ -13,6 +13,7 @@ using HandwritingRecognition.ImageProcessing;
 using HandwritingRecognition.Debugging;
 using HandwritingRecognition.Classification;
 using HandwritingRecognition.Communication;
+using HandwritingRecognition.Utils;
 
 namespace HandwritingRecognition
 {
@@ -37,6 +38,8 @@ namespace HandwritingRecognition
             //classifyTool.TrainTestKNN();
 
             ApplicationStarter.StartPythonClient();
+            ApplicationUseManager appUseManagerInstance = ApplicationUseManager.Instance;
+            appUseManagerInstance.TriggerApplicationNotReady();
             
 
             m_connectedComponents = new List<ConnectedComponent>();
