@@ -25,6 +25,12 @@
     <Compile Include="ConnectionManager.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="MessagesCreator.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MessagesInterpreter.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="PythonClient.py" />
   </ItemGroup>
   <PropertyGroup>
