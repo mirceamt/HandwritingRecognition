@@ -13,11 +13,10 @@ namespace HandwritingRecognition.Communication
     {
         private static IPAddress address = IPAddress.Parse("127.0.0.1");
         private static Int32 port = 13000;
-        private static TcpListener tcpListener = null;
+        public static TcpListener tcpListener = null;
         private static Socket socket = null;
 
         private static bool connected = false;
-
 
         private static void ListenToConnectionsOnAnotherThread()
         {

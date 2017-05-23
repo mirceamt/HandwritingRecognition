@@ -2,9 +2,10 @@
 import MessagesCreator
 from MessagesInterpreter import *
 
+print("Started Python Client...")
 connManager = ConnectionManager.ConnectionManager()
 messagesCreator = MessagesCreator.MessagesCreator()
-messagesInterpreter = MessagesInterpreter.MessagesInterpreter()
+messagesInterpreter = MessagesInterpreter()
 
 host = "127.0.0.1"
 port = 13000

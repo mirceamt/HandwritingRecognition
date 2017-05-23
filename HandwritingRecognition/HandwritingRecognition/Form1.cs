@@ -33,11 +33,13 @@ namespace HandwritingRecognition
         {
             InitializeComponent();
 
+            this.FormClosed += Form1_FormClosed;
+
             //ClassifyTool classifyTool = ClassifyTool.Instance;
             //classifyTool.TrainKNN(@"F:\Processed Images\32x32");
             //classifyTool.TrainTestKNN();
 
-            ApplicationStarter.StartPythonClient();
+            ApplicationStarter.StartPythonClientFromExecutable();
             ApplicationUseManager appUseManagerInstance = ApplicationUseManager.Instance;
             appUseManagerInstance.TriggerApplicationNotReady();
 
@@ -49,6 +51,15 @@ namespace HandwritingRecognition
             this.m_auxiliaryBitmap = new Bitmap(drawPanel.Width, drawPanel.Height, drawPanel.CreateGraphics());
             Graphics.FromImage(m_auxiliaryBitmap).Clear(Color.White);
             connectedComponentsTool.Initialize(m_auxiliaryBitmap);
+        }
+
+        void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            if (ConnectionManager.tcpListener != null)
+            {
+                ConnectionManager.tcpListener.Server.Close(0);
+                ConnectionManager.tcpListener.Stop();
+            }
         }
 
         private void drawPanel_MouseMove(object sender, MouseEventArgs e)
