@@ -39,7 +39,9 @@ namespace HandwritingRecognition
             //classifyTool.TrainKNN(@"F:\Processed Images\32x32");
             //classifyTool.TrainTestKNN();
 
-            ApplicationStarter.StartPythonClientFromExecutable();
+            //ApplicationStarter.StartPythonClientFromExecutable();
+            ApplicationStarter.StartPythonClientFromStartingPoint();
+
             ApplicationUseManager appUseManagerInstance = ApplicationUseManager.Instance;
             appUseManagerInstance.TriggerApplicationNotReady();
 

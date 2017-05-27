@@ -24,6 +24,7 @@ namespace HandwritingRecognition.Communication
             String pythonClientExecutablePath = sr.ReadLine();
             sr.Close();
             pythonClientProcess = Process.Start(pythonClientExecutablePath);
+
             pythonClientProcess.EnableRaisingEvents = true;
             pythonClientProcess.Exited += pythonClientProcess_Exited;
             // TODO
@@ -39,15 +40,26 @@ namespace HandwritingRecognition.Communication
             StreamReader sr = new StreamReader(Paths.PythonClientStartingPointPathFile);
             String pythonClientStartingPoint = sr.ReadLine();
             sr.Close();
-            pythonClientProcess = new Process();
+
+            String startPythonClientCommand = "python " + pythonClientStartingPoint;
+
             ProcessStartInfo startInfo = new ProcessStartInfo();
-            startInfo.FileName = "cmd.exe";
-            startInfo
+            startInfo.FileName = "python";
+            startInfo.Arguments = pythonClientStartingPoint;
 
+            pythonClientProcess = new Process();
+            pythonClientProcess.StartInfo = startInfo;
+            pythonClientProcess.Start();
 
+            //pythonClientProcess.StandardInput.WriteLine(startPythonClientCommand);
+            //pythonClientProcess.StandardInput.Flush();
+            //pythonClientProcess.StandardInput.Close();
+            //pythonClientProcess.WaitForExit();
 
             pythonClientProcess.EnableRaisingEvents = true;
             pythonClientProcess.Exited += pythonClientProcess_Exited;
+            // TODO
+            // set button for start/stop python client on UI accordingly
         }
 
         public static void StopPythonClient()
