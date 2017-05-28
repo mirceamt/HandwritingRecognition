@@ -14,11 +14,22 @@ connManager.connect(host, port)
 
 #TODO
 #load the ConvNet from file specified in C:\HandwritingRecognition\CommonResources\HandwritingRecognitionCNNPath.txt
+if not connManager.isConnected():
+    print("Could not connect to main programm!")
+    print("press enter to close python client")
+    _ = input()
+    exit()
 
 connManager.sendBytes(messagesCreator.createClientReadyMessage());
 
 while True:
-    receivedBytes = connManager.receiveBytes()
+    try:
+        receivedBytes = connManager.receiveBytes()
+    except ConnectionResetError:
+        print ("main program has been closed")
+        break;
+
+
     firstByte = receivedBytes[0]
     receivedMessageMeaning = messagesInterpreter.interpretMessage(firstByte)
 
@@ -39,3 +50,6 @@ while True:
 
     #for i in range(len(receviedBytes)):
     #    print(receviedBytes[i], )
+
+print("press enter to close python client")
+_ = input()

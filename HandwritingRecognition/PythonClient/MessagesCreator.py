@@ -27,7 +27,7 @@ class MessagesCreator:
     def __init__(self):
         pass
 
-    def createClientReadyMessage():
+    def createClientReadyMessage(self):
         ret = bytearray()
         ret.append(4)
         return ret

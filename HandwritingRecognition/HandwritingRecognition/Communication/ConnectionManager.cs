@@ -34,7 +34,31 @@ namespace HandwritingRecognition.Communication
 
         public static void SendBytes(byte[] bytesToSend)
         {
-            socket.Send(bytesToSend);
+            try
+            {
+                socket.Send(bytesToSend);
+            }
+            catch (SocketException e)
+            {
+                //show notification: restart python client
+                
+            }
+        }
+
+        public static byte[] ReceiveBytes()
+        {
+            byte[] receivedBytes = new byte[2048];
+            try
+            {
+                socket.Receive(receivedBytes);
+                return receivedBytes;
+            }
+            catch(SocketException e)
+            {
+                //show notification: restart python client
+                return null;
+            }
+            
         }
     }
 }

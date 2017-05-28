@@ -18,6 +18,7 @@ namespace HandwritingRecognition.Communication
         {
             if (pythonClientProcess != null)
             {
+                // TODO actually show notification: "python client already started"
                 throw new Exception("attempted to start two python clients");
             }
             StreamReader sr = new StreamReader(Paths.PythonClientExecutablePathFile);
@@ -35,6 +36,7 @@ namespace HandwritingRecognition.Communication
         {
             if (pythonClientProcess != null)
             {
+                // TODO actually show notification: "python client already started"
                 throw new Exception("attempted to start two python clients");
             }
             StreamReader sr = new StreamReader(Paths.PythonClientStartingPointPathFile);
@@ -50,11 +52,6 @@ namespace HandwritingRecognition.Communication
             pythonClientProcess = new Process();
             pythonClientProcess.StartInfo = startInfo;
             pythonClientProcess.Start();
-
-            //pythonClientProcess.StandardInput.WriteLine(startPythonClientCommand);
-            //pythonClientProcess.StandardInput.Flush();
-            //pythonClientProcess.StandardInput.Close();
-            //pythonClientProcess.WaitForExit();
 
             pythonClientProcess.EnableRaisingEvents = true;
             pythonClientProcess.Exited += pythonClientProcess_Exited;
