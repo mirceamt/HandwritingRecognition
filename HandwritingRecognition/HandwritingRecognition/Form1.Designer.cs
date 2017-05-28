@@ -41,6 +41,7 @@
             this.clearButton = new System.Windows.Forms.Button();
             this.testConnectedComponentsWindowButton = new System.Windows.Forms.Button();
             this.sendBytesToPythonDebugButton = new System.Windows.Forms.Button();
+            this.startPythonClientButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // drawPanel
@@ -159,11 +160,22 @@
             this.sendBytesToPythonDebugButton.UseVisualStyleBackColor = true;
             this.sendBytesToPythonDebugButton.Click += new System.EventHandler(this.sendBytesToPythonDebugButton_Click);
             // 
+            // startPythonClientButton
+            // 
+            this.startPythonClientButton.Location = new System.Drawing.Point(13, 155);
+            this.startPythonClientButton.Name = "startPythonClientButton";
+            this.startPythonClientButton.Size = new System.Drawing.Size(142, 36);
+            this.startPythonClientButton.TabIndex = 15;
+            this.startPythonClientButton.Text = "Start Python Client";
+            this.startPythonClientButton.UseVisualStyleBackColor = true;
+            this.startPythonClientButton.Click += new System.EventHandler(this.startPythonClientButton_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(884, 561);
+            this.Controls.Add(this.startPythonClientButton);
             this.Controls.Add(this.sendBytesToPythonDebugButton);
             this.Controls.Add(this.testConnectedComponentsWindowButton);
             this.Controls.Add(this.clearButton);
@@ -199,6 +211,7 @@
         private System.Windows.Forms.Button clearButton;
         private System.Windows.Forms.Button testConnectedComponentsWindowButton;
         private System.Windows.Forms.Button sendBytesToPythonDebugButton;
+        private System.Windows.Forms.Button startPythonClientButton;
     }
 }
 

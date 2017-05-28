@@ -60,6 +60,7 @@
     <Compile Include="Classification\KNNClassifier.cs" />
     <Compile Include="Communication\ApplicationStarter.cs" />
     <Compile Include="Communication\ConnectionManager.cs" />
+    <Compile Include="Communication\MessagesInterpreter.cs" />
     <Compile Include="ConnectedComponentsWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -80,6 +81,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\Paths.cs" />
     <Compile Include="Utils\ApplicationUseManager.cs" />
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

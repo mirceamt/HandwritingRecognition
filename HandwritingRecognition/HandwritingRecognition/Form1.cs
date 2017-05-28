@@ -31,21 +31,19 @@ namespace HandwritingRecognition
 
         public Form1()
         {
-            InitializeComponent();
+            ConnectionManager.StartListeningToConnections();
 
+            InitializeComponent();
+            
             this.FormClosed += Form1_FormClosed;
 
-            //ClassifyTool classifyTool = ClassifyTool.Instance;
-            //classifyTool.TrainKNN(@"F:\Processed Images\32x32");
-            //classifyTool.TrainTestKNN();
-
-            //ApplicationStarter.StartPythonClientFromExecutable();
-            ApplicationStarter.StartPythonClientFromStartingPoint();
+            // !!!!!!!!!!!!!!!!!!!!!!!!!LET THE CLIENT START ALONG WITH THE MAIN APP!!!!!!!!!!!!!!
+            //ApplicationStarter.StartPythonClientFromStartingPoint();
 
             ApplicationUseManager appUseManagerInstance = ApplicationUseManager.Instance;
             appUseManagerInstance.TriggerApplicationNotReady();
 
-            ConnectionManager.StartListeningToConnections();
+            
             
             
 
@@ -57,11 +55,7 @@ namespace HandwritingRecognition
 
         void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
-            if (ConnectionManager.tcpListener != null)
-            {
-                ConnectionManager.tcpListener.Server.Close(0);
-                ConnectionManager.tcpListener.Stop();
-            }
+            ConnectionManager.ShutdownConnectionManager();
         }
 
         private void drawPanel_MouseMove(object sender, MouseEventArgs e)
@@ -145,6 +139,11 @@ namespace HandwritingRecognition
                 bytesToSend[i] = (byte)i;
             }
             ConnectionManager.SendBytes(bytesToSend);
+        }
+
+        private void startPythonClientButton_Click(object sender, EventArgs e)
+        {
+            ApplicationStarter.StartPythonClientFromStartingPoint();
         }
     }
 }

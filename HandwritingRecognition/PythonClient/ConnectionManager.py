@@ -7,6 +7,7 @@ class ConnectionManager:
             self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         else:
             self.sock = sock
+
     def connect(self, host, port):
         self.isConnectedFlag = False
         try:
@@ -15,13 +16,16 @@ class ConnectionManager:
         except ConnectionRefusedError:
             print("ConnectionRefusedError - Could not connect to main program")
             pass
+
     def isConnected(self):
         if self.sock is None:
             return False
         else:
             return self.isConnectedFlag
+
     def sendBytes(self, bytes):
         self.sock.send(bytes)
+
     def receiveBytes(self):
         receivedBytes = self.sock.recv(2048)
         return receivedBytes

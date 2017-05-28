@@ -15,10 +15,10 @@
     msg[1] = length of the string 
     msg[2:] = the actual string
 
-    -- client ready
+    -- from client: client ready
     msg[0] = 4    
 
-    -- close python client
+    -- from main program: close python client
     msg[0] = 100
 
 """

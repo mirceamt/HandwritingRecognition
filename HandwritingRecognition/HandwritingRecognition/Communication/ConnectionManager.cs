@@ -14,7 +14,7 @@ namespace HandwritingRecognition.Communication
         private static IPAddress address = IPAddress.Parse("127.0.0.1");
         private static Int32 port = 13000;
         public static TcpListener tcpListener = null;
-        private static Socket socket = null;
+        public static Socket socket = null;
 
         private static bool connected = false;
 
@@ -23,6 +23,23 @@ namespace HandwritingRecognition.Communication
             tcpListener.Start();
             socket = tcpListener.AcceptSocket();
             connected = true;
+            while(true)
+            {
+                Tuple<int, byte[]> receivedPack = ConnectionManager.ReceiveBytes();
+                int receivedBytesCount = receivedPack.Item1;
+                byte[] receivedBytes = receivedPack.Item2;
+
+                if (receivedBytesCount == 0 || receivedBytes == null)
+                {
+                    // TODO
+                    // ApplicationUseManager.TriggerApplicationNotReady
+                    break;
+                }
+
+                // move action on another thread????
+                MessagesInterpreter.interpretMessageAndDoAction(receivedBytesCount, receivedBytes);
+                
+            }
         }
 
         public static void StartListeningToConnections()
@@ -40,25 +57,39 @@ namespace HandwritingRecognition.Communication
             }
             catch (SocketException e)
             {
+                // TODO
                 //show notification: restart python client
-                
             }
         }
 
-        public static byte[] ReceiveBytes()
+        public static Tuple<int, byte[]> ReceiveBytes()
         {
             byte[] receivedBytes = new byte[2048];
             try
             {
-                socket.Receive(receivedBytes);
-                return receivedBytes;
+                int cnt = socket.Receive(receivedBytes);
+                return new Tuple<int, byte[]>(cnt, receivedBytes);
             }
             catch(SocketException e)
             {
+                // TODO
                 //show notification: restart python client
-                return null;
+                return new Tuple<int, byte[]>(0, null);
             }
-            
+        }
+
+        internal static void ShutdownConnectionManager()
+        {
+            // WARNING! use with caution!
+            if (ConnectionManager.tcpListener != null)
+            {
+                ConnectionManager.tcpListener.Server.Close(0);
+                ConnectionManager.tcpListener.Stop();
+            }
+            if (ConnectionManager.socket != null)
+            {
+                ConnectionManager.socket.Close();
+            }
         }
     }
 }

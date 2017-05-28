@@ -21,6 +21,7 @@ if not connManager.isConnected():
     exit()
 
 connManager.sendBytes(messagesCreator.createClientReadyMessage());
+print("Sent ready message to main program")
 
 while True:
     try:
