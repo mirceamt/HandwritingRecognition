@@ -45,28 +45,39 @@ namespace HandwritingRecognition.Communication
             }
 
             connected = true;
+            bool tryRestartServer = true;
             while (true)
             {
                 Tuple<int, byte[]> receivedPack = ConnectionManager.ReceiveBytes();
                 int receivedBytesCount = receivedPack.Item1;
                 byte[] receivedBytes = receivedPack.Item2;
 
-                if (receivedBytesCount == 0 || receivedBytes == null)
+                if (receivedBytesCount == 0 && receivedBytes == null)
                 {
+                    // ConnectionReset - remote peer reset the connection
                     Logger.LogError("Restart Python Client!");
                     ApplicationUseManager.Instance.TriggerApplicationNotReady();
+                    tryRestartServer = true;
+                    break;
+                }
+                else if (receivedBytesCount == -1  && receivedBytes == null)
+                {
+                    // ConnectionAborted - The connection was aborted by the .NET Framework or the underlying socket provider.
+                    tryRestartServer = false;
                     break;
                 }
 
                 // TODO
                 // move action on another thread????
                 MessagesInterpreter.interpretMessageAndDoAction(receivedBytesCount, receivedBytes);
-
             }
-            tcpListener.Stop();
-            socket = null;
-            Thread th2 = new Thread(new ThreadStart(ListenToConnectionsOnAnotherThread));
-            th2.Start();
+            if (tryRestartServer)
+            {
+                tcpListener.Stop();
+                socket = null;
+                Thread th2 = new Thread(new ThreadStart(ListenToConnectionsOnAnotherThread));
+                th2.Start();
+            }
         }
 
         public static void StartListeningToConnections()
@@ -99,9 +110,17 @@ namespace HandwritingRecognition.Communication
             }
             catch(SocketException e)
             {
-                Logger.LogError("Restart Python Client!");
-                ApplicationUseManager.Instance.TriggerApplicationNotReady();
-                return new Tuple<int, byte[]>(0, null);
+                if (e.SocketErrorCode == SocketError.ConnectionReset)
+                {
+                    Logger.LogError("Restart Python Client!");
+                    ApplicationUseManager.Instance.TriggerApplicationNotReady();
+                    return new Tuple<int, byte[]>(0, null);
+                }
+                else if (e.SocketErrorCode == SocketError.ConnectionAborted)
+                {
+                    return new Tuple<int, byte[]>(-1, null);
+                }
+                return new Tuple<int, byte[]>(-2, null);
             }
         }
 

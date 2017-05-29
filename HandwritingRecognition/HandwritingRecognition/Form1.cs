@@ -43,11 +43,8 @@ namespace HandwritingRecognition
             appUseManagerInstance.TriggerApplicationNotReady();
 
             ConnectionManager.StartListeningToConnections();
-            // !!!!!!!!!!!!!!!!!!!!!!!!!LET THE CLIENT START ALONG WITH THE MAIN APP!!!!!!!!!!!!!!
-            //ApplicationStarter.StartPythonClientFromStartingPoint();
-
-            
-
+            // !!!!!!!!!!!!!!!!!!!!!!!!!  LET THE CLIENT START ALONG WITH THE MAIN APP!!!!!!!!!!!!!!
+            ApplicationStarter.StartPythonClientFromStartingPoint();
 
             m_connectedComponents = new List<ConnectedComponent>();
             this.m_auxiliaryBitmap = new Bitmap(drawPanel.Width, drawPanel.Height, drawPanel.CreateGraphics());
