@@ -26,10 +26,17 @@ namespace HandwritingRecognition.Utils
             loggerDataSource.AddMessage(newMessage);
             if (lastMessageLabel.IsHandleCreated)
             {
-                lastMessageLabel.Invoke((MethodInvoker)delegate
+                try
                 {
-                    SetLastMessageLabel(newMessage, color ?? Color.Black);
-                });
+                    lastMessageLabel.Invoke((MethodInvoker)delegate
+                    {
+                        SetLastMessageLabel(newMessage, color ?? Color.Black);
+                    });
+                }
+                catch (ObjectDisposedException e)
+                {
+
+                }
             }
             else
             {
@@ -43,10 +50,16 @@ namespace HandwritingRecognition.Utils
             loggerDataSource.AddMessage(newMessage);
             if (lastMessageLabel.IsHandleCreated)
             {
-                lastMessageLabel.Invoke((MethodInvoker)delegate
+                try
                 {
-                    SetLastMessageLabel(newMessage, color ?? Color.Red);
-                });
+                    lastMessageLabel.Invoke((MethodInvoker)delegate
+                    {
+                        SetLastMessageLabel(newMessage, color ?? Color.Red);
+                    });
+                }
+                catch (ObjectDisposedException e)
+                {
+                }
             }
             else
             {
@@ -60,10 +73,17 @@ namespace HandwritingRecognition.Utils
             loggerDataSource.AddMessage(newMessage);
             if (lastMessageLabel.IsHandleCreated)
             {
-                lastMessageLabel.Invoke((MethodInvoker)delegate
+                try
                 {
-                    SetLastMessageLabel(newMessage, color ?? Color.Red);
-                });
+                    lastMessageLabel.Invoke((MethodInvoker)delegate
+                    {
+                        SetLastMessageLabel(newMessage, color ?? Color.Red);
+                    });
+                }
+                catch (ObjectDisposedException e)
+                {
+
+                }
             }
             else
             {

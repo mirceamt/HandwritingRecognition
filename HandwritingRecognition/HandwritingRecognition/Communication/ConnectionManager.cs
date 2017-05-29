@@ -23,9 +23,29 @@ namespace HandwritingRecognition.Communication
         private static void ListenToConnectionsOnAnotherThread()
         {
             tcpListener.Start();
-            socket = tcpListener.AcceptSocket();
+            socket = null;
+            connected = false;
+            try
+            {
+                socket = tcpListener.AcceptSocket();
+            }
+            catch (SocketException e)
+            {
+                if (e.SocketErrorCode == SocketError.Interrupted)
+                {
+                    // program closed and therefore interrupted the AcceptSocket() call
+                    return;
+                }
+
+                // otherwise we should try to restart listening
+                socket = null;
+                Thread th = new Thread(new ThreadStart(ListenToConnectionsOnAnotherThread));
+                th.Start();
+                return;
+            }
+
             connected = true;
-            while(true)
+            while (true)
             {
                 Tuple<int, byte[]> receivedPack = ConnectionManager.ReceiveBytes();
                 int receivedBytesCount = receivedPack.Item1;
@@ -41,8 +61,12 @@ namespace HandwritingRecognition.Communication
                 // TODO
                 // move action on another thread????
                 MessagesInterpreter.interpretMessageAndDoAction(receivedBytesCount, receivedBytes);
-                
+
             }
+            tcpListener.Stop();
+            socket = null;
+            Thread th2 = new Thread(new ThreadStart(ListenToConnectionsOnAnotherThread));
+            th2.Start();
         }
 
         public static void StartListeningToConnections()

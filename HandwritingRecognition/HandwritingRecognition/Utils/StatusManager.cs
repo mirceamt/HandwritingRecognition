@@ -20,10 +20,17 @@ namespace HandwritingRecognition.Utils
         {
             if (statusLabel.IsHandleCreated)
             {
-                statusLabel.Invoke((MethodInvoker)delegate
+                try
                 {
-                    SetStatusLabel(message, color);
-                });
+                    statusLabel.Invoke((MethodInvoker)delegate
+                    {
+                        SetStatusLabel(message, color);
+                    });
+                }
+                catch (ObjectDisposedException e)
+                {
+
+                }
             }
             else
             {
