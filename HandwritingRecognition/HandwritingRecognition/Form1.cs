@@ -31,21 +31,20 @@ namespace HandwritingRecognition
 
         public Form1()
         {
-            ConnectionManager.StartListeningToConnections();
-
             InitializeComponent();
+            Logger.Initialize(lastMessageLabel);
+            Logger.LogInfo("app started");
             
             this.FormClosed += Form1_FormClosed;
 
+            ApplicationUseManager appUseManagerInstance = ApplicationUseManager.Instance;
+            appUseManagerInstance.TriggerApplicationNotReady();
+            ConnectionManager.StartListeningToConnections();
             // !!!!!!!!!!!!!!!!!!!!!!!!!LET THE CLIENT START ALONG WITH THE MAIN APP!!!!!!!!!!!!!!
             //ApplicationStarter.StartPythonClientFromStartingPoint();
 
-            ApplicationUseManager appUseManagerInstance = ApplicationUseManager.Instance;
-            appUseManagerInstance.TriggerApplicationNotReady();
+            
 
-            
-            
-            
 
             m_connectedComponents = new List<ConnectedComponent>();
             this.m_auxiliaryBitmap = new Bitmap(drawPanel.Width, drawPanel.Height, drawPanel.CreateGraphics());

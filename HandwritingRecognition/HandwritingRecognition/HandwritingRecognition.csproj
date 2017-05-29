@@ -81,6 +81,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\Paths.cs" />
     <Compile Include="Utils\ApplicationUseManager.cs" />
+    <Compile Include="Utils\Logger.cs" />
+    <Compile Include="Utils\LoggerDataSource.cs" />
+    <Compile Include="Utils\LogModel.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

@@ -27,7 +27,7 @@ while True:
     try:
         receivedBytes = connManager.receiveBytes()
     except ConnectionResetError:
-        print ("main program has been closed")
+        print ("main p.rogram has been closed")
         break;
 
 
