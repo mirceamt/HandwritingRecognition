@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using HandwritingRecognition.Utils;
+
 /*
     **messages meaning**
 
@@ -71,11 +73,7 @@ namespace HandwritingRecognition.Communication
             switch(msgMeaning)
             {
                 case MessagesMeaning.ClientReady:
-                    // TODO 
-                    // ApplicationUseManager - TriggerApplicationReady
-                    int x = 1;
-                    x++;
-
+                    ApplicationUseManager.Instance.TriggerApplicationReady();
                     break;
                 case MessagesMeaning.Unknown:
                     Console.WriteLine("received unkown message from client: ");

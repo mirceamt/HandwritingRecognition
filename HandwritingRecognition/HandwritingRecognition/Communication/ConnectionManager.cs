@@ -7,6 +7,8 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 
+using HandwritingRecognition.Utils;
+
 namespace HandwritingRecognition.Communication
 {
     class ConnectionManager
@@ -31,11 +33,12 @@ namespace HandwritingRecognition.Communication
 
                 if (receivedBytesCount == 0 || receivedBytes == null)
                 {
-                    // TODO
-                    // ApplicationUseManager.TriggerApplicationNotReady
+                    Logger.LogError("Restart Python Client!");
+                    ApplicationUseManager.Instance.TriggerApplicationNotReady();
                     break;
                 }
 
+                // TODO
                 // move action on another thread????
                 MessagesInterpreter.interpretMessageAndDoAction(receivedBytesCount, receivedBytes);
                 
@@ -57,8 +60,8 @@ namespace HandwritingRecognition.Communication
             }
             catch (SocketException e)
             {
-                // TODO
-                //show notification: restart python client
+                Logger.LogError("Restart Python Client!");
+                ApplicationUseManager.Instance.TriggerApplicationNotReady();
             }
         }
 
@@ -72,8 +75,8 @@ namespace HandwritingRecognition.Communication
             }
             catch(SocketException e)
             {
-                // TODO
-                //show notification: restart python client
+                Logger.LogError("Restart Python Client!");
+                ApplicationUseManager.Instance.TriggerApplicationNotReady();
                 return new Tuple<int, byte[]>(0, null);
             }
         }

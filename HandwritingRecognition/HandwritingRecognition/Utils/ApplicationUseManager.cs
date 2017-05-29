@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Drawing;
 
 namespace HandwritingRecognition.Utils
 {
@@ -56,12 +57,14 @@ namespace HandwritingRecognition.Utils
 
         private void ApplicationReadyEventHandler(object o, ApplicationUseEventArgs e)
         {
-            // TODO
+            Logger.LogInfo("Application Ready To Use", Color.Green);
+            StatusManager.SetStatus("Status: Ready", Color.Green);
         }
 
         private void ApplicationNotReadyEventHandler(object o, ApplicationUseEventArgs e)
         {
-            // TODO
+            Logger.LogError("Application cannot be used. Please start Python Client!", Color.Red);
+            StatusManager.SetStatus("Status: Not Ready", Color.Red);
         }
     }
 }

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 
 using HandwritingRecognition.Resources;
+using HandwritingRecognition.Utils;
 
 namespace HandwritingRecognition.Communication
 {
@@ -18,8 +19,8 @@ namespace HandwritingRecognition.Communication
         {
             if (pythonClientProcess != null)
             {
-                // TODO actually show notification: "python client already started"
-                throw new Exception("attempted to start two python clients");
+                Logger.LogInfo("Python Client already started");
+                return;
             }
             StreamReader sr = new StreamReader(Paths.PythonClientExecutablePathFile);
             String pythonClientExecutablePath = sr.ReadLine();
@@ -36,8 +37,8 @@ namespace HandwritingRecognition.Communication
         {
             if (pythonClientProcess != null)
             {
-                // TODO actually show notification: "python client already started"
-                throw new Exception("attempted to start two python clients");
+                Logger.LogInfo("Python Client already started");
+                return;
             }
             StreamReader sr = new StreamReader(Paths.PythonClientStartingPointPathFile);
             String pythonClientStartingPoint = sr.ReadLine();
@@ -71,6 +72,8 @@ namespace HandwritingRecognition.Communication
         static void pythonClientProcess_Exited(object sender, EventArgs e)
         {
             pythonClientProcess = null;
+            Logger.LogError("Restart Python Client!");
+            ApplicationUseManager.Instance.TriggerApplicationNotReady();
             // TODO
             // set button for start/stop python client on UI accordingly
         }

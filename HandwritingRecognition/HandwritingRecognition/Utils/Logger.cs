@@ -24,24 +24,57 @@ namespace HandwritingRecognition.Utils
         {
             String newMessage = "[Info] - " + message;
             loggerDataSource.AddMessage(newMessage);
-            lastMessageLabel.Text = newMessage;
-            lastMessageLabel.ForeColor = color ?? Color.Black;
+            if (lastMessageLabel.IsHandleCreated)
+            {
+                lastMessageLabel.Invoke((MethodInvoker)delegate
+                {
+                    SetLastMessageLabel(newMessage, color ?? Color.Black);
+                });
+            }
+            else
+            {
+                SetLastMessageLabel(newMessage, color ?? Color.Black);
+            }
         }
 
         public static void LogWarning(String message, Color? color = null)
         {
             String newMessage = "[Warning] - " + message;
             loggerDataSource.AddMessage(newMessage);
-            lastMessageLabel.Text = newMessage; 
-            lastMessageLabel.ForeColor = color ?? Color.Red;
+            if (lastMessageLabel.IsHandleCreated)
+            {
+                lastMessageLabel.Invoke((MethodInvoker)delegate
+                {
+                    SetLastMessageLabel(newMessage, color ?? Color.Red);
+                });
+            }
+            else
+            {
+                SetLastMessageLabel(newMessage, color ?? Color.Red);
+            }
         }
 
         public static void LogError(String message, Color? color = null)
         {
             String newMessage = "[Error] - " + message;
             loggerDataSource.AddMessage(newMessage);
+            if (lastMessageLabel.IsHandleCreated)
+            {
+                lastMessageLabel.Invoke((MethodInvoker)delegate
+                {
+                    SetLastMessageLabel(newMessage, color ?? Color.Red);
+                });
+            }
+            else
+            {
+                SetLastMessageLabel(newMessage, color ?? Color.Red);
+            }
+        }
+
+        private static void SetLastMessageLabel(String newMessage, Color color)
+        {
             lastMessageLabel.Text = newMessage;
-            lastMessageLabel.ForeColor = color ?? Color.Red;
+            lastMessageLabel.ForeColor = color;
         }
 
         public static BindingSource DataSource

@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Threading;
 
 using HandwritingRecognition.ImageProcessing;
 using HandwritingRecognition.Debugging;
@@ -33,12 +34,14 @@ namespace HandwritingRecognition
         {
             InitializeComponent();
             Logger.Initialize(lastMessageLabel);
+            StatusManager.Initialize(statusLabel);
             Logger.LogInfo("app started");
             
             this.FormClosed += Form1_FormClosed;
 
             ApplicationUseManager appUseManagerInstance = ApplicationUseManager.Instance;
             appUseManagerInstance.TriggerApplicationNotReady();
+
             ConnectionManager.StartListeningToConnections();
             // !!!!!!!!!!!!!!!!!!!!!!!!!LET THE CLIENT START ALONG WITH THE MAIN APP!!!!!!!!!!!!!!
             //ApplicationStarter.StartPythonClientFromStartingPoint();
