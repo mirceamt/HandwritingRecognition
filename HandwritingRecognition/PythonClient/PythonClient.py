@@ -1,11 +1,13 @@
 ﻿import ConnectionManager
 import MessagesCreator
 from MessagesInterpreter import *
+import CNNClassifier
 
 print("Started Python Client...")
 connManager = ConnectionManager.ConnectionManager()
 messagesCreator = MessagesCreator.MessagesCreator()
 messagesInterpreter = MessagesInterpreter()
+cnnClassifier = CNNClassifier.CNNClassifier()
 
 host = "127.0.0.1"
 port = 13000
@@ -19,6 +21,8 @@ if not connManager.isConnected():
     print("press enter to close python client")
     _ = input()
     exit()
+
+cnnClassifier.Load(r"C:\HandwritingRecognition\CommonResources\HandwritingRecognitionCNNPath.txt")
 
 connManager.sendBytes(messagesCreator.createClientReadyMessage());
 print("Sent ready message to main program")
