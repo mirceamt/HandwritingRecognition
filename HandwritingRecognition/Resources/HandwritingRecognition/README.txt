@@ -1,0 +1,1 @@
+this folder called "HandwritingRecognition" must be placed in the root of C: drive

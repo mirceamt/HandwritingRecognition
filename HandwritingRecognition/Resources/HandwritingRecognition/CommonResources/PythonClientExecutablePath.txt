@@ -1,0 +1,1 @@
+F:\PythonTests\tensorflow_test\cnnExe\dist\nistTraining\nistTraining.exe

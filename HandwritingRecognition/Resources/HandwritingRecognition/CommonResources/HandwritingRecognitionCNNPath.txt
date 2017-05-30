@@ -1,0 +1,3 @@
+F:\saved checkpoints\cnn1\
+cnn1st
+99000
