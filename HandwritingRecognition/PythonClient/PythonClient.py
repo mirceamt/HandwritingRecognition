@@ -42,16 +42,22 @@ while True:
         break
 
     elif receivedMessageMeaning == MessagesMeaning.classifyImage:
-        # TODO
         # use ImageClassifier and send message back to c#
-        pass
+        example = [0.0] * 1024
+        unu = ord('1')
+        for i in range(1, 1025):
+            currentPixel = 1.0 if receivedBytes[i] == unu else 0.0
+            example[i-1] = currentPixel
+
+        multipleCharacterPossibilitesAsString = cnnClassifier.Classify(example);
+        responseAsBytes = messagesCreator.createResponseOfMultipleCharacterPossibilites(multipleCharacterPossibilitesAsString)
+
+        connManager.sendBytes(responseAsBytes)
     else:
         print("received unknown message:")
         for i in range(len(receivedBytes)):
             print(receivedBytes[i], )
 
-
-        
 
     #for i in range(len(receviedBytes)):
     #    print(receviedBytes[i], )

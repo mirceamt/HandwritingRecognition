@@ -75,10 +75,23 @@ namespace HandwritingRecognition.Communication
                 case MessagesMeaning.ClientReady:
                     ApplicationUseManager.Instance.TriggerApplicationReady();
                     break;
+
+                case MessagesMeaning.ClassificationAsLetters:
+                    int lengthOfString = (int)receivedBytes[1];
+                    String responseMultipleCharactersAsString = "";
+                    for (int i = 2, counter = 1; counter <= lengthOfString; counter++, i++)
+                    {
+                        byte currentByte = receivedBytes[i];
+                        responseMultipleCharactersAsString += Convert.ToChar(currentByte);
+                    }
+                    UIUpdater.UpdatePredictedWord(responseMultipleCharactersAsString);
+                    break;
+
                 case MessagesMeaning.Unknown:
                     Console.WriteLine("received unkown message from client: ");
                     Console.WriteLine(receivedBytes);
                     break;
+                    
             }
         }
     }

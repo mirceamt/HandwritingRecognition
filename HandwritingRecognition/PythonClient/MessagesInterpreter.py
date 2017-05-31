@@ -1,4 +1,4 @@
-from enum import Enum, unique
+﻿from enum import Enum, unique
 
 @unique
 class MessagesMeaning(Enum):
@@ -12,7 +12,7 @@ class MessagesInterpreter:
         self.closePythonClient = 100
         self.classifyImage = 1
 
-    def interpretMessage(byte):
+    def interpretMessage(self, byte):
         if byte == 1:
             return MessagesMeaning.classifyImage
         elif byte == 100:

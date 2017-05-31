@@ -1,4 +1,5 @@
 ﻿import tensorflow as tf
+import DataTools
 
 class CNNClassifier:
     def __init__(self):
@@ -42,3 +43,7 @@ class CNNClassifier:
     def Classify(self, example, label = None):
         #send example as an array of 1024 floats of 0.0 / 1.0 meaning the vectorized version of the square image of 32x32
         yPredictedVector = self.sess.run(self.y_conv, feed_dict={self.x: [example], self.keep_prob: 1.0})
+
+        predictedCharactersMultiplePossibilites = DataTools.classVectorToMultipleCharacters(yPredictedVector[0].tolist())
+        return predictedCharactersMultiplePossibilites
+

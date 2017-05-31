@@ -12,7 +12,7 @@
 
     -- response from client with the predictions as stringified floats
     msg[0] = 3
-    msg[1] = length of the string 
+    msg[1] = length of the string  # TODO no enough
     msg[2:] = the actual string
 
     -- from client: client ready
@@ -32,3 +32,16 @@ class MessagesCreator:
         ret.append(4)
         return ret
     
+    def createResponseOfMultipleCharacterPossibilites(self, multipleCharacterPossibilitesAsString):
+        # message of type 2
+        lengthOfString = len(multipleCharacterPossibilitesAsString)
+        responseAsBytes = bytearray(1 + 1 + lengthOfString);
+
+        responseAsBytes[0] = 2
+        responseAsBytes[1] = lengthOfString
+        cnt = 1
+        for i in range(len(multipleCharacterPossibilitesAsString)):
+            cnt = cnt + 1
+            responseAsBytes[cnt] = ord(multipleCharacterPossibilitesAsString[i])
+
+        return responseAsBytes

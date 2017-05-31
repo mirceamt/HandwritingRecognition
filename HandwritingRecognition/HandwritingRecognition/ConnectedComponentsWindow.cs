@@ -38,6 +38,14 @@ namespace HandwritingRecognition
 
             ConnectedComponent currentComponent = DebugConnectedComponentsTool.ConnectedComponents[index];
             CharacterImage currentCharacterImage = new CharacterImage(currentComponent);
+            if (!currentCharacterImage.IsNormalizedTo32x32())
+            {
+                currentCharacterImage.NormalizeTo32x32();
+            }
+            if (!currentCharacterImage.IsMadeOnlyBlackAndWhite())
+            {
+                currentCharacterImage.MakeOnlyBlackAndWhite();
+            }
 
             m_auxiliaryBitmap = currentCharacterImage.GetBitmap();
 
@@ -73,7 +81,5 @@ namespace HandwritingRecognition
             }
             DisplayConnectedComponent(index);
         }
-
-
     }
 }

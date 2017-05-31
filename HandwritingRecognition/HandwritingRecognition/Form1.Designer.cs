@@ -36,13 +36,15 @@
             this.statusLabel = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.lastMessageLabel = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.predictedWordLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // drawPanel
             // 
             this.drawPanel.BackColor = System.Drawing.SystemColors.Window;
             this.drawPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.drawPanel.Location = new System.Drawing.Point(166, 12);
+            this.drawPanel.Location = new System.Drawing.Point(166, 38);
             this.drawPanel.Name = "drawPanel";
             this.drawPanel.Size = new System.Drawing.Size(1398, 321);
             this.drawPanel.TabIndex = 0;
@@ -53,7 +55,7 @@
             // 
             // clearButton
             // 
-            this.clearButton.Location = new System.Drawing.Point(12, 310);
+            this.clearButton.Location = new System.Drawing.Point(12, 336);
             this.clearButton.Name = "clearButton";
             this.clearButton.Size = new System.Drawing.Size(148, 23);
             this.clearButton.TabIndex = 12;
@@ -63,7 +65,7 @@
             // 
             // testConnectedComponentsWindowButton
             // 
-            this.testConnectedComponentsWindowButton.Location = new System.Drawing.Point(12, 256);
+            this.testConnectedComponentsWindowButton.Location = new System.Drawing.Point(12, 282);
             this.testConnectedComponentsWindowButton.Name = "testConnectedComponentsWindowButton";
             this.testConnectedComponentsWindowButton.Size = new System.Drawing.Size(143, 35);
             this.testConnectedComponentsWindowButton.TabIndex = 13;
@@ -73,7 +75,7 @@
             // 
             // sendBytesToPythonDebugButton
             // 
-            this.sendBytesToPythonDebugButton.Location = new System.Drawing.Point(13, 206);
+            this.sendBytesToPythonDebugButton.Location = new System.Drawing.Point(13, 232);
             this.sendBytesToPythonDebugButton.Name = "sendBytesToPythonDebugButton";
             this.sendBytesToPythonDebugButton.Size = new System.Drawing.Size(142, 35);
             this.sendBytesToPythonDebugButton.TabIndex = 14;
@@ -83,7 +85,7 @@
             // 
             // startPythonClientButton
             // 
-            this.startPythonClientButton.Location = new System.Drawing.Point(13, 155);
+            this.startPythonClientButton.Location = new System.Drawing.Point(13, 181);
             this.startPythonClientButton.Name = "startPythonClientButton";
             this.startPythonClientButton.Size = new System.Drawing.Size(142, 36);
             this.startPythonClientButton.TabIndex = 15;
@@ -95,7 +97,7 @@
             // 
             this.statusLabel.AutoSize = true;
             this.statusLabel.ForeColor = System.Drawing.Color.Red;
-            this.statusLabel.Location = new System.Drawing.Point(1364, 336);
+            this.statusLabel.Location = new System.Drawing.Point(1364, 362);
             this.statusLabel.Name = "statusLabel";
             this.statusLabel.Size = new System.Drawing.Size(94, 13);
             this.statusLabel.TabIndex = 16;
@@ -105,7 +107,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(163, 336);
+            this.label1.Location = new System.Drawing.Point(163, 369);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(67, 13);
             this.label1.TabIndex = 17;
@@ -114,17 +116,37 @@
             // lastMessageLabel
             // 
             this.lastMessageLabel.AutoSize = true;
-            this.lastMessageLabel.Location = new System.Drawing.Point(232, 336);
+            this.lastMessageLabel.Location = new System.Drawing.Point(232, 369);
             this.lastMessageLabel.Name = "lastMessageLabel";
             this.lastMessageLabel.Size = new System.Drawing.Size(10, 13);
             this.lastMessageLabel.TabIndex = 18;
             this.lastMessageLabel.Text = " ";
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(163, 12);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(100, 13);
+            this.label2.TabIndex = 19;
+            this.label2.Text = "Predicted word: ";
+            // 
+            // predictedWordLabel
+            // 
+            this.predictedWordLabel.AutoSize = true;
+            this.predictedWordLabel.Location = new System.Drawing.Point(260, 12);
+            this.predictedWordLabel.Name = "predictedWordLabel";
+            this.predictedWordLabel.Size = new System.Drawing.Size(0, 13);
+            this.predictedWordLabel.TabIndex = 20;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1576, 355);
+            this.ClientSize = new System.Drawing.Size(1576, 391);
+            this.Controls.Add(this.predictedWordLabel);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.lastMessageLabel);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.statusLabel);
@@ -150,6 +172,8 @@
         private System.Windows.Forms.Label statusLabel;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lastMessageLabel;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label predictedWordLabel;
     }
 }
 

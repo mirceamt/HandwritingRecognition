@@ -35,6 +35,8 @@ namespace HandwritingRecognition
             InitializeComponent();
             Logger.Initialize(lastMessageLabel);
             StatusManager.Initialize(statusLabel);
+            UIUpdater.Initialize(predictedWordLabel);
+
             Logger.LogInfo("app started");
             
             this.FormClosed += Form1_FormClosed;
@@ -44,7 +46,7 @@ namespace HandwritingRecognition
 
             ConnectionManager.StartListeningToConnections();
             // !!!!!!!!!!!!!!!!!!!!!!!!!  LET THE CLIENT START ALONG WITH THE MAIN APP!!!!!!!!!!!!!!
-            ApplicationStarter.StartPythonClientFromStartingPoint();
+            //ApplicationStarter.StartPythonClientFromStartingPoint();
 
             m_connectedComponents = new List<ConnectedComponent>();
             this.m_auxiliaryBitmap = new Bitmap(drawPanel.Width, drawPanel.Height, drawPanel.CreateGraphics());
@@ -63,7 +65,7 @@ namespace HandwritingRecognition
             {
                 Graphics panel = Graphics.FromImage(m_auxiliaryBitmap);
 
-                Pen pen = new Pen(Color.Black, 10);
+                Pen pen = new Pen(Color.Black, 12);
 
                 pen.EndCap = LineCap.Round;
                 pen.StartCap = LineCap.Round;
@@ -100,8 +102,48 @@ namespace HandwritingRecognition
             m_connectedComponents = connectedComponentsTool.InspectConnectedComponents(m_auxiliaryBitmap);
             // TODO: sort the connected components according to their position in the panel
 
-            // TODO: move the classification below to another thread
+            // TODO: refactor this logic
+            ConnectedComponent lastConnectedComponent = m_connectedComponents.Last();
+            CharacterImage lastImage = new CharacterImage(lastConnectedComponent);
+            DisplayImageAsAsciiInConsole(lastImage);
+            if (!lastImage.IsNormalizedTo32x32())
+            {
+                lastImage.NormalizeTo32x32();
+            }
+            if (!lastImage.IsMadeOnlyBlackAndWhite())
+            {
+                lastImage.MakeOnlyBlackAndWhite();
+            }
+            String lastImageLinearizedAsString = lastImage.LinearizeImageToString();
+            ConnectionManager.SendLinearizedImageForClassification(lastImageLinearizedAsString);
+        }
 
+        private void DisplayImageAsAsciiInConsole(CharacterImage image)
+        {
+            if (!image.IsNormalizedTo32x32())
+            {
+                image.NormalizeTo32x32();
+            }
+            if (!image.IsMadeOnlyBlackAndWhite())
+            {
+                image.MakeOnlyBlackAndWhite();
+            }
+            String lastImageLinearizedAsString = image.LinearizeImageToString();
+            int cnt = 0;
+            for (int i = 0; i < 32; i++)
+            {
+                for (int j = 0; j < 32; j++)
+                {
+                    char ch = '0';
+                    if (lastImageLinearizedAsString[cnt] == '0')
+                        ch = '0';
+                    else
+                        ch = ' ';
+                    cnt++;
+                    Console.Write(ch);
+                }
+                Console.WriteLine();
+            }
         }
 
         private void drawPanel_Paint(object sender, PaintEventArgs e)
@@ -123,6 +165,7 @@ namespace HandwritingRecognition
             drawPanel.CreateGraphics().DrawImageUnscaled(m_auxiliaryBitmap, new Point(0, 0));
             connectedComponentsTool.Initialize(m_auxiliaryBitmap);
             m_connectedComponents.RemoveRange(0, m_connectedComponents.Count);
+            UIUpdater.ResetPredictedWordLabel();
         }
 
         private void testConnectedComponentsWindowButton_Click(object sender, EventArgs e)

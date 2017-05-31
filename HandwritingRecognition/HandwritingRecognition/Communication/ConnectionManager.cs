@@ -137,5 +137,24 @@ namespace HandwritingRecognition.Communication
                 ConnectionManager.socket.Close();
             }
         }
+
+        internal static void SendLinearizedImageForClassification(string lastImageLinearizedAsString)
+        {
+            byte[] bytesToSend = new byte[1030];
+            bytesToSend[0] = 1;
+            int cnt = 0;
+
+            if (lastImageLinearizedAsString.Length != 1024)
+            {
+                throw new Exception("linearized image does not have a length of 1024!!!!!!!");
+            }
+
+            for (int i = 0; i < lastImageLinearizedAsString.Length; i++)
+            {
+                bytesToSend[++cnt] = (byte) lastImageLinearizedAsString[i];
+            }
+
+            ConnectionManager.SendBytes(bytesToSend);
+        }
     }
 }
