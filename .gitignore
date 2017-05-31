@@ -46,6 +46,8 @@ build/
 *.log
 *.scc
 
+!HandwritingRecognition/Resources/CNNMetaGraphAndParameters/*
+
 # Visual C++ cache files
 ipch/
 *.aps
