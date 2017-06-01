@@ -46,6 +46,7 @@ namespace HandwritingRecognition
             {
                 currentCharacterImage.MakeOnlyBlackAndWhite();
             }
+            currentCharacterImage.ThickenBlackPixels();
 
             m_auxiliaryBitmap = currentCharacterImage.GetBitmap();
 

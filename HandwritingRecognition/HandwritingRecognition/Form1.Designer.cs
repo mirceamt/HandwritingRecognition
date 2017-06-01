@@ -38,6 +38,7 @@
             this.lastMessageLabel = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.predictedWordLabel = new System.Windows.Forms.Label();
+            this.collectNewDataButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // drawPanel
@@ -140,11 +141,22 @@
             this.predictedWordLabel.Size = new System.Drawing.Size(0, 13);
             this.predictedWordLabel.TabIndex = 20;
             // 
+            // collectNewDataButton
+            // 
+            this.collectNewDataButton.Location = new System.Drawing.Point(13, 131);
+            this.collectNewDataButton.Name = "collectNewDataButton";
+            this.collectNewDataButton.Size = new System.Drawing.Size(142, 39);
+            this.collectNewDataButton.TabIndex = 21;
+            this.collectNewDataButton.Text = "Collect New Data";
+            this.collectNewDataButton.UseVisualStyleBackColor = true;
+            this.collectNewDataButton.Click += new System.EventHandler(this.collectNewDataButton_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1576, 391);
+            this.Controls.Add(this.collectNewDataButton);
             this.Controls.Add(this.predictedWordLabel);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.lastMessageLabel);
@@ -174,6 +186,7 @@
         private System.Windows.Forms.Label lastMessageLabel;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label predictedWordLabel;
+        private System.Windows.Forms.Button collectNewDataButton;
     }
 }
 

@@ -9,15 +9,7 @@ namespace HandwritingRecognition.ImageProcessing
 {
     public sealed class ConnectedComponentsTool
     {
-        private static ConnectedComponentsTool m_instance = new ConnectedComponentsTool();
-        private ConnectedComponentsTool() { } 
-        public static ConnectedComponentsTool Instance
-        {
-            get
-            {
-                return m_instance;
-            }
-        }
+        public ConnectedComponentsTool() { } 
 
         public void Initialize(Bitmap bitmap)
         {
@@ -152,6 +144,33 @@ namespace HandwritingRecognition.ImageProcessing
             ConnectedComponent newComponent = new ConnectedComponent(newComponentIndex, newComponentPointsList);
             newComponent.NormalizeUsingTranslation();
             m_existingConnectedComponents.Add(newComponent);
+        }
+
+        public List<ConnectedComponent> GetAllConnectedComponentsAsOneUsingBoundingBox(Bitmap bmp)
+        {
+            // this method will be used for special characters such as 'i' and 'j' which consist of more than one connected component
+            // and will use a bounding box for all the non-white pixels to return a list consisting of only one ConnectedComponent object
+
+            List<ConnectedComponent> ret = new List<ConnectedComponent>();
+            List<Point> newConnectedComponentPointsList = new List<Point>();
+            m_connectedComponentsCounter++;
+
+            for (int i = 0; i < bmp.Height; i++)
+            {
+                for (int j = 0; j < bmp.Width; j++)
+                {
+                    Color drawColor = bmp.GetPixel(j, i);
+                    if (drawColor.ToArgb() != Color.White.ToArgb()) // it's a non white pixel, presumably a black one
+                    {
+                        newConnectedComponentPointsList.Add(new Point(i, j)); // 99% sure it's (i,j) and NOT (j,i)
+                    }
+                }
+            }
+            ConnectedComponent newConnectedComponent = new ConnectedComponent(m_connectedComponentsCounter, newConnectedComponentPointsList);
+            newConnectedComponent.NormalizeUsingTranslation();
+            ret.Add(newConnectedComponent);
+
+            return ret;
         }
 
         private bool IsInternalPoint(Point p)

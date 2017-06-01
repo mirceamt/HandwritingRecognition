@@ -58,6 +58,12 @@
   <ItemGroup>
     <Compile Include="Classification\ClassifyTool.cs" />
     <Compile Include="Classification\KNNClassifier.cs" />
+    <Compile Include="CollectNewDataWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CollectNewDataWindow.Designer.cs">
+      <DependentUpon>CollectNewDataWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="Communication\ApplicationStarter.cs" />
     <Compile Include="Communication\ConnectionManager.cs" />
     <Compile Include="Communication\MessagesInterpreter.cs" />
@@ -86,6 +92,9 @@
     <Compile Include="Utils\LogModel.cs" />
     <Compile Include="Utils\StatusManager.cs" />
     <Compile Include="Utils\UIUpdater.cs" />
+    <EmbeddedResource Include="CollectNewDataWindow.resx">
+      <DependentUpon>CollectNewDataWindow.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

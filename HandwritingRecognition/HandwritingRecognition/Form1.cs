@@ -26,7 +26,7 @@ namespace HandwritingRecognition
 
         Bitmap m_auxiliaryBitmap;
 
-        ConnectedComponentsTool connectedComponentsTool = ConnectedComponentsTool.Instance;
+        ConnectedComponentsTool connectedComponentsTool = new ConnectedComponentsTool();
 
         List<ConnectedComponent> m_connectedComponents;
 
@@ -46,7 +46,7 @@ namespace HandwritingRecognition
 
             ConnectionManager.StartListeningToConnections();
             // !!!!!!!!!!!!!!!!!!!!!!!!!  LET THE CLIENT START ALONG WITH THE MAIN APP!!!!!!!!!!!!!!
-            //ApplicationStarter.StartPythonClientFromStartingPoint();
+            ApplicationStarter.StartPythonClientFromStartingPoint();
 
             m_connectedComponents = new List<ConnectedComponent>();
             this.m_auxiliaryBitmap = new Bitmap(drawPanel.Width, drawPanel.Height, drawPanel.CreateGraphics());
@@ -114,6 +114,8 @@ namespace HandwritingRecognition
             {
                 lastImage.MakeOnlyBlackAndWhite();
             }
+            lastImage.ThickenBlackPixels();
+
             String lastImageLinearizedAsString = lastImage.LinearizeImageToString();
             ConnectionManager.SendLinearizedImageForClassification(lastImageLinearizedAsString);
         }
@@ -165,6 +167,7 @@ namespace HandwritingRecognition
             drawPanel.CreateGraphics().DrawImageUnscaled(m_auxiliaryBitmap, new Point(0, 0));
             connectedComponentsTool.Initialize(m_auxiliaryBitmap);
             m_connectedComponents.RemoveRange(0, m_connectedComponents.Count);
+
             UIUpdater.ResetPredictedWordLabel();
         }
 
@@ -186,6 +189,12 @@ namespace HandwritingRecognition
         private void startPythonClientButton_Click(object sender, EventArgs e)
         {
             ApplicationStarter.StartPythonClientFromStartingPoint();
+        }
+
+        private void collectNewDataButton_Click(object sender, EventArgs e)
+        {
+            CollectNewDataWindow newWindow = new CollectNewDataWindow();
+            newWindow.ShowDialog();
         }
     }
 }
