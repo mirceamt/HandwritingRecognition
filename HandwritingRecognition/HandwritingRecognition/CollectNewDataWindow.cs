@@ -77,7 +77,7 @@ namespace HandwritingRecognition
         private void drawPanel_MouseUp(object sender, MouseEventArgs e)
         {
             m_canDraw = false;
-            m_connectedComponents = connectedComponentsTool.InspectConnectedComponents(m_auxiliaryBitmap);
+            //m_connectedComponents = connectedComponentsTool.InspectConnectedComponents(m_auxiliaryBitmap);
         }
 
         private void drawPanel_Paint(object sender, PaintEventArgs e)
@@ -181,6 +181,7 @@ namespace HandwritingRecognition
                 errorLabel.Text = "Error: Please set a valid label";
                 return;
             }
+            m_connectedComponents = connectedComponentsTool.InspectAllConnectedComponentsAtOnce(m_auxiliaryBitmap);
             SaveConnectedComponentsToFileHelper(m_connectedComponents);
         }
 

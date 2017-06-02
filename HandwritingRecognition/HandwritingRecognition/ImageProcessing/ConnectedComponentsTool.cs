@@ -21,6 +21,8 @@ namespace HandwritingRecognition.ImageProcessing
 
             m_lastColorMatrix = new Color[m_height, m_width];
             m_connectedComponentsMatrix = new int[m_height, m_width];
+            m_connectedComponentsMatrixForAtOnce = new int[m_height, m_width];
+
             m_visitedCells = new bool[m_height, m_width];
             m_existingConnectedComponents = new List<ConnectedComponent>();
 
@@ -32,9 +34,82 @@ namespace HandwritingRecognition.ImageProcessing
                 {
                     m_lastColorMatrix[i, j] = Color.White;
                     m_connectedComponentsMatrix[i, j] = 0;
+                    m_connectedComponentsMatrixForAtOnce[i, j] = 0;
                     m_visitedCells[i, j] = false;
                 }
             }
+        }
+
+        private ConnectedComponent GetConnectedComponent(int contor, Point startingPoint, Bitmap bmp)
+        {
+            List<Point> newConnectedComponentListOfPoints = new List<Point>();
+            Queue<Point> queue = new Queue<Point>();
+
+            m_visitedCells[startingPoint.X, startingPoint.Y] = true;
+            queue.Enqueue(startingPoint);
+            m_connectedComponentsMatrixForAtOnce[startingPoint.X, startingPoint.Y] = contor;
+
+            while(queue.Count > 0)
+            {
+                Point currentPoint = queue.Dequeue();
+                newConnectedComponentListOfPoints.Add(currentPoint);
+
+                for (int k = 0; k < 8; k++)
+                {
+                    Point nextPoint = new Point(currentPoint.X + dx8[k], currentPoint.Y + dy8[k]);
+
+                    if (IsInternalPoint(nextPoint) && m_visitedCells[nextPoint.X, nextPoint.Y] == false && bmp.GetPixel(nextPoint.Y, nextPoint.X).ToArgb() != Color.White.ToArgb())
+                    {
+                        m_visitedCells[nextPoint.X, nextPoint.Y] = true;
+                        m_connectedComponentsMatrixForAtOnce[nextPoint.X, nextPoint.Y] = contor;
+                        queue.Enqueue(nextPoint);
+                    }
+                }
+            }
+
+            ConnectedComponent ret = new ConnectedComponent(contor, newConnectedComponentListOfPoints);
+            return ret;
+        }
+
+        public List<ConnectedComponent> InspectAllConnectedComponentsAtOnce(Bitmap bmp)
+        {
+            //use this method to get all the connected components from the bitmap using only one traversal of the bitmap
+            // this method is particularly useful when gathering examples for training because repeated calls
+            // to InspectConnectedComponents delay the app
+
+            if (!m_initialized)
+            {
+                throw new Exception("ConnectedComponentsTool not initialized yet!");
+            }
+
+            for (int i = 0; i < m_height; i++)
+            {
+                for (int j = 0; j < m_width; j++)
+                {
+                    m_visitedCells[i, j] = false;
+                    m_connectedComponentsMatrixForAtOnce[i, j] = 0;
+                }
+            }
+            List<ConnectedComponent> ret = new List<ConnectedComponent>();
+            int contor = 0;
+            for (int i = 0; i < m_height; i++)
+            {
+                for (int j = 0; j < m_width; j++)
+                {
+                    Color drawnColor = bmp.GetPixel(j, i);
+                    int drawnColorArgb = drawnColor.ToArgb();
+
+                    if (drawnColorArgb != Color.White.ToArgb() && m_visitedCells[i, j] == false)
+                    {
+                        contor++;
+                        ConnectedComponent currentConnectedComponent = GetConnectedComponent(contor, new Point(i, j), bmp);
+                        currentConnectedComponent.NormalizeUsingTranslation();
+                        ret.Add(currentConnectedComponent);
+                    }
+                }
+            }
+
+            return ret;
         }
 
         public List<ConnectedComponent> InspectConnectedComponents(Bitmap bmp)
@@ -205,6 +280,7 @@ namespace HandwritingRecognition.ImageProcessing
 
         private Color[,] m_lastColorMatrix = null;
         private int[,] m_connectedComponentsMatrix = null;
+        private int[,] m_connectedComponentsMatrixForAtOnce = null;
         private bool[,] m_visitedCells = null;
         private int m_connectedComponentsCounter;
 

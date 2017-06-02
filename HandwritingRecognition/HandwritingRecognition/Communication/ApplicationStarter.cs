@@ -44,11 +44,11 @@ namespace HandwritingRecognition.Communication
             String pythonClientStartingPoint = sr.ReadLine();
             sr.Close();
 
-            String startPythonClientCommand = "python " + pythonClientStartingPoint;
+            String startPythonClientCommand = "python " + "\"" + pythonClientStartingPoint + "\"";
 
             ProcessStartInfo startInfo = new ProcessStartInfo();
             startInfo.FileName = "python";
-            startInfo.Arguments = pythonClientStartingPoint;
+            startInfo.Arguments = "\"" + pythonClientStartingPoint + "\"";
 
             pythonClientProcess = new Process();
             pythonClientProcess.StartInfo = startInfo;
