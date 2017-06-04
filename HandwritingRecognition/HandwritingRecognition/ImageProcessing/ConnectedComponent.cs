@@ -39,6 +39,46 @@ namespace HandwritingRecognition.ImageProcessing
             m_globalCenter = new PointF(globalX, globalY);
         }
 
+        public int GlobalLeft
+        {
+            get
+            {
+                return m_globalLeft;
+            }
+        }
+
+        public int GlobalRight
+        {
+            get
+            {
+                return m_globalRight;
+            }
+        }
+
+        public int GlobalUp
+        {
+            get
+            {
+                return m_globalUp;
+            }
+        }
+
+        public int GlobalBottom
+        {
+            get
+            {
+                return m_globalBottom;
+            }
+        }
+
+        public PointF GlobalCenter
+        {
+            get
+            {
+                return m_globalCenter;
+            }
+        }
+
         public int ID
         {
             get
