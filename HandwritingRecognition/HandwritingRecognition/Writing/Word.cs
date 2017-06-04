@@ -10,8 +10,6 @@ using HandwritingRecognition.ImageProcessing;
 
 namespace HandwritingRecognition.Writing
 {
-    
-
     class Word
     {
         class ConnectedComponentComparer : Comparer<int>
@@ -42,14 +40,14 @@ namespace HandwritingRecognition.Writing
         private Dictionary<int, List<String>> m_possibleChars = null;
         private Dictionary<int, List<int>> m_positionsOfChosenChars = null; // numbers between [0-61]
         private Dictionary<int, ConnectedComponent> m_connectedComponents = null;
-        private List<int> orderOfComponents = null;
+        private List<int> m_orderOfComponents = null;
         
         public Word()
         {
-            m_possibleChars = new Dictionary<int, List<string>>();
+            m_possibleChars = new Dictionary<int, List<String>>();
             m_positionsOfChosenChars = new Dictionary<int, List<int>>();
             m_connectedComponents = new Dictionary<int, ConnectedComponent>();
-            orderOfComponents = new List<int>();
+            m_orderOfComponents = new List<int>();
         }
 
         public void AddConnectedComponent(int id, ConnectedComponent connectedComponent, List<String> possibleChars)
@@ -62,7 +60,7 @@ namespace HandwritingRecognition.Writing
             }
             m_positionsOfChosenChars.Add(id, positionsOfChosenChars);
             m_connectedComponents.Add(id, connectedComponent);
-            orderOfComponents.Add(id);
+            m_orderOfComponents.Add(id);
         }
 
         public void AddConnectedComponent(int id, ConnectedComponent connectedComponent, List<String> possibleChars, List<int> positionsOfChosenChars)
@@ -70,22 +68,34 @@ namespace HandwritingRecognition.Writing
             m_possibleChars.Add(id, possibleChars);
             m_positionsOfChosenChars.Add(id, positionsOfChosenChars);
             m_connectedComponents.Add(id, connectedComponent);
-            orderOfComponents.Add(id);
+            m_orderOfComponents.Add(id);
+        }
+
+        public void RemoveConnectedComponents(List<ConnectedComponent> connectedComponentsToRemove)
+        {
+            for (int i = 0; i < connectedComponentsToRemove.Count; i++)
+            {
+                int id = connectedComponentsToRemove[i].ID;
+                m_connectedComponents.Remove(id);
+                m_possibleChars.Remove(id);
+                m_positionsOfChosenChars.Remove(id);
+                m_orderOfComponents.Remove(id);
+            }
         }
 
         public void SortComponents()
         {
             // here we sort the connected components using their global center 
-            orderOfComponents.Sort(new ConnectedComponentComparer(this));
+            m_orderOfComponents.Sort(new ConnectedComponentComparer(this));
         }
 
         public String ToString()
         {
             SortComponents();
             String ret = "";
-            for (int i = 0; i < orderOfComponents.Count; i++)
+            for (int i = 0; i < m_orderOfComponents.Count; i++)
             {
-                int currentComponentId = orderOfComponents[i];
+                int currentComponentId = m_orderOfComponents[i];
                 List<String> currentPossibleChars = m_possibleChars[currentComponentId];
                 List<int> currentPositionsOfChosenChars = m_positionsOfChosenChars[currentComponentId];
 
@@ -198,6 +208,5 @@ namespace HandwritingRecognition.Writing
 
             return ret;
         }
-
     }
 }
