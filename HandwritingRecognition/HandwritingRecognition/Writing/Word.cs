@@ -89,7 +89,7 @@ namespace HandwritingRecognition.Writing
             m_orderOfComponents.Sort(new ConnectedComponentComparer(this));
         }
 
-        public String ToString()
+        public override String ToString()
         {
             SortComponents();
             String ret = "";
