@@ -45,9 +45,9 @@
             // 
             this.drawPanel.BackColor = System.Drawing.SystemColors.Window;
             this.drawPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.drawPanel.Location = new System.Drawing.Point(166, 38);
+            this.drawPanel.Location = new System.Drawing.Point(165, 128);
             this.drawPanel.Name = "drawPanel";
-            this.drawPanel.Size = new System.Drawing.Size(1398, 321);
+            this.drawPanel.Size = new System.Drawing.Size(1292, 321);
             this.drawPanel.TabIndex = 0;
             this.drawPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.drawPanel_Paint);
             this.drawPanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.drawPanel_MouseDown);
@@ -56,7 +56,7 @@
             // 
             // clearButton
             // 
-            this.clearButton.Location = new System.Drawing.Point(12, 336);
+            this.clearButton.Location = new System.Drawing.Point(11, 426);
             this.clearButton.Name = "clearButton";
             this.clearButton.Size = new System.Drawing.Size(148, 23);
             this.clearButton.TabIndex = 12;
@@ -66,7 +66,7 @@
             // 
             // testConnectedComponentsWindowButton
             // 
-            this.testConnectedComponentsWindowButton.Location = new System.Drawing.Point(12, 282);
+            this.testConnectedComponentsWindowButton.Location = new System.Drawing.Point(11, 372);
             this.testConnectedComponentsWindowButton.Name = "testConnectedComponentsWindowButton";
             this.testConnectedComponentsWindowButton.Size = new System.Drawing.Size(143, 35);
             this.testConnectedComponentsWindowButton.TabIndex = 13;
@@ -76,7 +76,7 @@
             // 
             // sendBytesToPythonDebugButton
             // 
-            this.sendBytesToPythonDebugButton.Location = new System.Drawing.Point(13, 232);
+            this.sendBytesToPythonDebugButton.Location = new System.Drawing.Point(12, 322);
             this.sendBytesToPythonDebugButton.Name = "sendBytesToPythonDebugButton";
             this.sendBytesToPythonDebugButton.Size = new System.Drawing.Size(142, 35);
             this.sendBytesToPythonDebugButton.TabIndex = 14;
@@ -86,7 +86,7 @@
             // 
             // startPythonClientButton
             // 
-            this.startPythonClientButton.Location = new System.Drawing.Point(13, 181);
+            this.startPythonClientButton.Location = new System.Drawing.Point(12, 271);
             this.startPythonClientButton.Name = "startPythonClientButton";
             this.startPythonClientButton.Size = new System.Drawing.Size(142, 36);
             this.startPythonClientButton.TabIndex = 15;
@@ -98,7 +98,7 @@
             // 
             this.statusLabel.AutoSize = true;
             this.statusLabel.ForeColor = System.Drawing.Color.Red;
-            this.statusLabel.Location = new System.Drawing.Point(1364, 362);
+            this.statusLabel.Location = new System.Drawing.Point(1363, 452);
             this.statusLabel.Name = "statusLabel";
             this.statusLabel.Size = new System.Drawing.Size(94, 13);
             this.statusLabel.TabIndex = 16;
@@ -108,7 +108,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(163, 369);
+            this.label1.Location = new System.Drawing.Point(162, 459);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(67, 13);
             this.label1.TabIndex = 17;
@@ -117,7 +117,7 @@
             // lastMessageLabel
             // 
             this.lastMessageLabel.AutoSize = true;
-            this.lastMessageLabel.Location = new System.Drawing.Point(232, 369);
+            this.lastMessageLabel.Location = new System.Drawing.Point(231, 459);
             this.lastMessageLabel.Name = "lastMessageLabel";
             this.lastMessageLabel.Size = new System.Drawing.Size(10, 13);
             this.lastMessageLabel.TabIndex = 18;
@@ -143,7 +143,7 @@
             // 
             // collectNewDataButton
             // 
-            this.collectNewDataButton.Location = new System.Drawing.Point(13, 131);
+            this.collectNewDataButton.Location = new System.Drawing.Point(12, 221);
             this.collectNewDataButton.Name = "collectNewDataButton";
             this.collectNewDataButton.Size = new System.Drawing.Size(142, 39);
             this.collectNewDataButton.TabIndex = 21;
@@ -155,7 +155,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1576, 391);
+            this.ClientSize = new System.Drawing.Size(1469, 476);
             this.Controls.Add(this.collectNewDataButton);
             this.Controls.Add(this.predictedWordLabel);
             this.Controls.Add(this.label2);

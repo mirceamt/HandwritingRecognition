@@ -25,6 +25,7 @@ namespace HandwritingRecognition.ImageProcessing
 
             m_visitedCells = new bool[m_height, m_width];
             m_existingConnectedComponents = new List<ConnectedComponent>();
+            m_latestRemovedConnectedComponents = new List<ConnectedComponent>();
 
             m_connectedComponentsCounter = 0;
             
@@ -213,8 +214,9 @@ namespace HandwritingRecognition.ImageProcessing
             //    m_existingConnectedComponents.RemoveAt(indexToDelete);
             //}
 
-
+            m_latestRemovedConnectedComponents = m_existingConnectedComponents.FindAll(x => oldConnectedComponentsIDs.Contains(x.ID));
             m_existingConnectedComponents.RemoveAll(x => oldConnectedComponentsIDs.Contains(x.ID));
+            
 
             ConnectedComponent newComponent = new ConnectedComponent(newComponentIndex, newComponentPointsList);
             newComponent.NormalizeUsingTranslation();
@@ -248,6 +250,24 @@ namespace HandwritingRecognition.ImageProcessing
             return ret;
         }
 
+        ConnectedComponent GetConnectedComponentsById(int idParam)
+        {
+            for (int i = 0; i < m_existingConnectedComponents.Count; i++)
+            {
+                if (m_existingConnectedComponents[i].ID == idParam)
+                {
+                    return m_existingConnectedComponents[i];
+                }
+            }
+            return null;
+        }
+
+        List<ConnectedComponent> GetLatestRemovedConnectedComponents()
+        {
+            return m_latestRemovedConnectedComponents;
+        }
+
+
         private bool IsInternalPoint(Point p)
         {
             return 0 <= p.X && p.X < m_height && 0 <= p.Y && p.Y < m_width;
@@ -277,6 +297,7 @@ namespace HandwritingRecognition.ImageProcessing
         }
 
         List<ConnectedComponent> m_existingConnectedComponents = null;
+        List<ConnectedComponent> m_latestRemovedConnectedComponents = null;
 
         private Color[,] m_lastColorMatrix = null;
         private int[,] m_connectedComponentsMatrix = null;

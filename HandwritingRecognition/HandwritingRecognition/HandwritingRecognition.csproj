@@ -92,6 +92,8 @@
     <Compile Include="Utils\LogModel.cs" />
     <Compile Include="Utils\StatusManager.cs" />
     <Compile Include="Utils\UIUpdater.cs" />
+    <Compile Include="Writing\Word.cs" />
+    <Compile Include="Writing\WritingObserver.cs" />
     <EmbeddedResource Include="CollectNewDataWindow.resx">
       <DependentUpon>CollectNewDataWindow.cs</DependentUpon>
     </EmbeddedResource>
