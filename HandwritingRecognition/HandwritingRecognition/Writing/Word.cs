@@ -50,6 +50,24 @@ namespace HandwritingRecognition.Writing
             m_orderOfComponents = new List<int>();
         }
 
+        public Word(Word oldWord, Dictionary<int, List<int>> newPositionsOfChosenChars)
+        {
+            this.m_possibleChars = oldWord.m_possibleChars;
+            this.m_positionsOfChosenChars = newPositionsOfChosenChars;
+            this.m_connectedComponents = oldWord.m_connectedComponents;
+            this.m_orderOfComponents = oldWord.m_orderOfComponents;
+        }
+
+        public Dictionary<int, List<String>> GetPossibleCharsDictionary()
+        {
+            return m_possibleChars;
+        }
+
+        public Dictionary<int, List<int>> GetPositionsOfChosenCharsDictionary()
+        {
+            return m_positionsOfChosenChars;
+        }
+
         public void AddConnectedComponent(int id, ConnectedComponent connectedComponent, List<String> possibleChars)
         {
             m_possibleChars.Add(id, possibleChars);
@@ -187,7 +205,6 @@ namespace HandwritingRecognition.Writing
 
             return ret;
         }
-
 
         public float GetAverageWidthOfLetter()
         {
