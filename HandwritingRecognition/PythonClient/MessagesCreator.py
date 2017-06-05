@@ -4,7 +4,7 @@
     -- request to classify a charecter from c#
     msg[0] = 1
     msg[1:5] = messageSignature (which is the ID of the last adjustment over the connected components)
-    msg[5:5+1029] = 1024 characters of '0' or '1' which represent the liniarized black and white letter written on the panel
+    msg[5:5+1024] = 1024 characters of '0' or '1' which represent the liniarized black and white letter written on the panel
 
     -- response from client with the predictions as characters
     msg[0] = 2

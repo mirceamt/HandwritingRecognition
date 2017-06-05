@@ -37,8 +37,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.lastMessageLabel = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.predictedWordLabel = new System.Windows.Forms.Label();
             this.collectNewDataButton = new System.Windows.Forms.Button();
+            this.predictedWordsTextBox = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // drawPanel
@@ -108,7 +108,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(162, 459);
+            this.label1.Location = new System.Drawing.Point(162, 452);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(67, 13);
             this.label1.TabIndex = 17;
@@ -117,7 +117,7 @@
             // lastMessageLabel
             // 
             this.lastMessageLabel.AutoSize = true;
-            this.lastMessageLabel.Location = new System.Drawing.Point(231, 459);
+            this.lastMessageLabel.Location = new System.Drawing.Point(231, 452);
             this.lastMessageLabel.Name = "lastMessageLabel";
             this.lastMessageLabel.Size = new System.Drawing.Size(10, 13);
             this.lastMessageLabel.TabIndex = 18;
@@ -127,19 +127,11 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(163, 12);
+            this.label2.Location = new System.Drawing.Point(162, 9);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(100, 13);
+            this.label2.Size = new System.Drawing.Size(106, 13);
             this.label2.TabIndex = 19;
-            this.label2.Text = "Predicted word: ";
-            // 
-            // predictedWordLabel
-            // 
-            this.predictedWordLabel.AutoSize = true;
-            this.predictedWordLabel.Location = new System.Drawing.Point(260, 12);
-            this.predictedWordLabel.Name = "predictedWordLabel";
-            this.predictedWordLabel.Size = new System.Drawing.Size(0, 13);
-            this.predictedWordLabel.TabIndex = 20;
+            this.label2.Text = "Predicted words: ";
             // 
             // collectNewDataButton
             // 
@@ -151,13 +143,20 @@
             this.collectNewDataButton.UseVisualStyleBackColor = true;
             this.collectNewDataButton.Click += new System.EventHandler(this.collectNewDataButton_Click);
             // 
+            // predictedWordsTextBox
+            // 
+            this.predictedWordsTextBox.Location = new System.Drawing.Point(268, 6);
+            this.predictedWordsTextBox.Name = "predictedWordsTextBox";
+            this.predictedWordsTextBox.Size = new System.Drawing.Size(1189, 20);
+            this.predictedWordsTextBox.TabIndex = 22;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1469, 476);
+            this.ClientSize = new System.Drawing.Size(1469, 473);
+            this.Controls.Add(this.predictedWordsTextBox);
             this.Controls.Add(this.collectNewDataButton);
-            this.Controls.Add(this.predictedWordLabel);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.lastMessageLabel);
             this.Controls.Add(this.label1);
@@ -185,8 +184,8 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lastMessageLabel;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label predictedWordLabel;
         private System.Windows.Forms.Button collectNewDataButton;
+        private System.Windows.Forms.TextBox predictedWordsTextBox;
     }
 }
 

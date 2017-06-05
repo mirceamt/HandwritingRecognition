@@ -15,6 +15,7 @@ using HandwritingRecognition.Debugging;
 using HandwritingRecognition.Classification;
 using HandwritingRecognition.Communication;
 using HandwritingRecognition.Utils;
+using HandwritingRecognition.Writing;
 
 namespace HandwritingRecognition
 {
@@ -27,6 +28,7 @@ namespace HandwritingRecognition
         Bitmap m_auxiliaryBitmap;
 
         ConnectedComponentsTool connectedComponentsTool = new ConnectedComponentsTool();
+        WritingObserver writingObserver = new WritingObserver();
 
         List<ConnectedComponent> m_connectedComponents;
 
@@ -35,7 +37,8 @@ namespace HandwritingRecognition
             InitializeComponent();
             Logger.Initialize(lastMessageLabel);
             StatusManager.Initialize(statusLabel);
-            UIUpdater.Initialize(predictedWordLabel);
+            UIUpdater.Initialize(predictedWordsTextBox);
+            MessagesInterpreter.Initialize(connectedComponentsTool, writingObserver);
 
             Logger.LogInfo("app started");
             
@@ -169,6 +172,7 @@ namespace HandwritingRecognition
             m_connectedComponents.RemoveRange(0, m_connectedComponents.Count);
 
             UIUpdater.ResetPredictedWordLabel();
+            writingObserver.Clear();
         }
 
         private void testConnectedComponentsWindowButton_Click(object sender, EventArgs e)

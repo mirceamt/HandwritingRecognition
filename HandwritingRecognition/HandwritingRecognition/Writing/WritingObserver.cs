@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using HandwritingRecognition.ImageProcessing;
+using HandwritingRecognition.Utils;
 
 namespace HandwritingRecognition.Writing
 {
@@ -24,8 +25,6 @@ namespace HandwritingRecognition.Writing
             m_candidateWords.Clear();
             
             m_currentWord = null;
-            m_finishedWords = null;
-            m_candidateWords = null;
         }
 
         private void CreateNewCurrentWord(List<ConnectedComponent> latestRemovedComponents, ConnectedComponent latestAddedComponent, List<String> possibleChars, List<int> positionsOfChosenChars = null)
@@ -42,20 +41,18 @@ namespace HandwritingRecognition.Writing
             m_currentWord.AddConnectedComponent(latestAddedComponent.ID, latestAddedComponent, possibleChars, positionsOfChosenChars);
         }
 
-        // TODO: implement CreateNewCandidateWords and UpdateUI and call these methods appropriately
         private void CreateNewCandidateWords()
         {
             // create new candidate words based on the current word
             m_candidateWords.Clear();
             m_candidateWords.Add(m_currentWord);
-            
 
-            // TODO: other words..
         }
 
         private void UpdateUI()
         {
-            // TODO
+            String allPredictedWords = this.ToString();
+            UIUpdater.SetPredictedWordsText(allPredictedWords);
         }
 
         public void AdjustExistingWords(List<ConnectedComponent> latestRemovedComponents, ConnectedComponent latestAddedComponent, List<String> possibleChars, List<int> positionsOfChosenChars = null)
@@ -75,7 +72,7 @@ namespace HandwritingRecognition.Writing
                 {
                     // if the distance between new connectedComponent (i.e. new letter) and the remaining word is greater than ratio * averageWidthOfLetter_inTheRemainingWord
                     // then create a new word
-                    FinishCurrentWord();
+                    FinishCurrentWordInternal();
                     CreateNewCurrentWord(latestRemovedComponents, latestAddedComponent, possibleChars, positionsOfChosenChars);
                 }
                 else
@@ -93,15 +90,41 @@ namespace HandwritingRecognition.Writing
                     }
                     m_currentWord.AddConnectedComponent(latestAddedComponent.ID, latestAddedComponent, possibleChars, positionsOfChosenChars);
                 }
-            }
+            } 
+            UpdateUI();
         }
 
-        public void FinishCurrentWord()
+        public override String ToString()
+        {
+            String ret = "";
+            for (int i = 0; i < m_finishedWords.Count; i++)
+            {
+                ret += m_finishedWords[i].ToString();
+                ret += " ";
+            }
+            if (m_currentWord != null)
+            {
+                ret += m_currentWord.ToString();
+            }
+            else
+            {
+                ret += " ";
+            }
+            return ret;
+        }
+
+        private void FinishCurrentWordInternal()
         {
             m_finishedWords.Add(m_currentWord);
             m_currentWord = null;
 
             m_candidateWords.Clear();
+        }
+
+        public void FinishCurrentWord()
+        {
+            FinishCurrentWordInternal();
+            UpdateUI();
         }
     }
 }

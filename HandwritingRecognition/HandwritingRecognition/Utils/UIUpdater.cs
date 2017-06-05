@@ -9,24 +9,24 @@ namespace HandwritingRecognition.Utils
 {
     class UIUpdater
     {
-        private static Label predictedWord = null;
-        public static void Initialize(Label label)
+        private static TextBox predictedWords = null;
+        public static void Initialize(TextBox textBox)
         {
-            predictedWord = label;
+            predictedWords = textBox;
         }
 
         public static void UpdatePredictedWord(String s)
         {
-            if (predictedWord.IsHandleCreated)
+            if (predictedWords.IsHandleCreated)
             {
                 try
                 {
-                    predictedWord.Invoke((MethodInvoker)delegate
+                    predictedWords.Invoke((MethodInvoker)delegate
                     {
                         AddLetterToLastPredictedWord(s[0]);
                     });
                 }
-                catch (ObjectDisposedException e)
+                catch (ObjectDisposedException)
                 {
 
                 }
@@ -39,30 +39,52 @@ namespace HandwritingRecognition.Utils
 
         public static void AddLetterToLastPredictedWord(char ch)
         {
-            String existingText = predictedWord.Text;
+            String existingText = predictedWords.Text;
             existingText += ch;
-            predictedWord.Text = existingText;
+            predictedWords.Text = existingText;
         }
 
         public static void ResetPredictedWordLabel()
         {
-            if (predictedWord.IsHandleCreated)
+            if (predictedWords.IsHandleCreated)
             {
                 try
                 {
-                    predictedWord.Invoke((MethodInvoker)delegate
+                    predictedWords.Invoke((MethodInvoker)delegate
                     {
-                        predictedWord.Text = "";
+                        predictedWords.Text = "";
                     });
                 }
-                catch (ObjectDisposedException e)
+                catch (ObjectDisposedException)
                 {
 
                 }
             }
             else
             {
-                predictedWord.Text = "";
+                predictedWords.Text = "";
+            }
+        }
+
+        internal static void SetPredictedWordsText(string allPredictedWords)
+        {
+            if (predictedWords.IsHandleCreated)
+            {
+                try
+                {
+                    predictedWords.Invoke((MethodInvoker)delegate
+                    {
+                        predictedWords.Text = allPredictedWords;
+                    });
+                }
+                catch (ObjectDisposedException)
+                {
+
+                }
+            }
+            else
+            {
+                predictedWords.Text = allPredictedWords;
             }
         }
     }
