@@ -44,13 +44,16 @@ while True:
     elif receivedMessageMeaning == MessagesMeaning.classifyImage:
         # use ImageClassifier and send message back to c#
         example = [0.0] * 1024
+        messageSignature = receivedBytes[1:5] # the messageSignature actually represents the ID of the latest adjustment made over connected components
+
         unu = ord('1')
-        for i in range(1, 1025):
+        cnt = 0
+        for i in range(5, 5 + 1024):
             currentPixel = 1.0 if receivedBytes[i] == unu else 0.0
-            example[i-1] = currentPixel
+            example[i - 5] = currentPixel
 
         multipleCharacterPossibilitesAsString = cnnClassifier.Classify(example);
-        responseAsBytes = messagesCreator.createResponseOfMultipleCharacterPossibilites(multipleCharacterPossibilitesAsString)
+        responseAsBytes = messagesCreator.createResponseOfMultipleCharacterPossibilites(multipleCharacterPossibilitesAsString, messageSignature)
 
         connManager.sendBytes(responseAsBytes)
     else:

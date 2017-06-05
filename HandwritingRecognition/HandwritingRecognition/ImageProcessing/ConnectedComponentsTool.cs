@@ -28,6 +28,9 @@ namespace HandwritingRecognition.ImageProcessing
             m_latestRemovedConnectedComponents = new List<ConnectedComponent>();
             m_latestAddedConnectedComponent = null;
 
+            m_adjustmentsDoneCounter = 0;
+            m_adjustmentsDone = new Dictionary<int, Tuple<List<ConnectedComponent>, ConnectedComponent>>();
+
             m_connectedComponentsCounter = 0;
             
             for (int i = 0; i < m_height; i++)
@@ -220,7 +223,11 @@ namespace HandwritingRecognition.ImageProcessing
 
             ConnectedComponent newComponent = new ConnectedComponent(newComponentIndex, newComponentPointsList);
             newComponent.NormalizeUsingTranslation();
+
             m_latestAddedConnectedComponent = newComponent;
+
+            m_adjustmentsDoneCounter++;
+            m_adjustmentsDone.Add(m_adjustmentsDoneCounter, new Tuple<List<ConnectedComponent>, ConnectedComponent>(m_latestRemovedConnectedComponents, m_latestAddedConnectedComponent));
 
             m_existingConnectedComponents.Add(newComponent);
         }
@@ -260,6 +267,20 @@ namespace HandwritingRecognition.ImageProcessing
                 {
                     return m_existingConnectedComponents[i];
                 }
+            }
+            return null;
+        }
+
+        public int GetLatestAdjustmentId()
+        {
+            return m_adjustmentsDoneCounter;
+        }
+
+        public Tuple<List<ConnectedComponent>, ConnectedComponent> GetAdjustmentById(int id)
+        {
+            if (m_adjustmentsDone.ContainsKey(id))
+            {
+                return m_adjustmentsDone[id];
             }
             return null;
         }
@@ -307,6 +328,9 @@ namespace HandwritingRecognition.ImageProcessing
         List<ConnectedComponent> m_existingConnectedComponents = null;
         List<ConnectedComponent> m_latestRemovedConnectedComponents = null;
         ConnectedComponent m_latestAddedConnectedComponent = null;
+
+        Dictionary<int, Tuple<List<ConnectedComponent>, ConnectedComponent>> m_adjustmentsDone = null;
+        int m_adjustmentsDoneCounter = 0;
 
         private Color[,] m_lastColorMatrix = null;
         private int[,] m_connectedComponentsMatrix = null;

@@ -78,12 +78,23 @@ namespace HandwritingRecognition.Communication
 
                 case MessagesMeaning.ClassificationAsLetters:
                     int lengthOfString = (int)receivedBytes[1];
+                    
+                    byte[] lastAdjustmentIdBytes = new byte[4];
+                    lastAdjustmentIdBytes[0] = receivedBytes[2];
+                    lastAdjustmentIdBytes[1] = receivedBytes[3];
+                    lastAdjustmentIdBytes[2] = receivedBytes[4];
+                    lastAdjustmentIdBytes[3] = receivedBytes[5];
+
+                    int lastAdjustmentId = CommonUtils.Transform4BytesToInt(lastAdjustmentIdBytes);
+
                     String responseMultipleCharactersAsString = "";
-                    for (int i = 2, counter = 1; counter <= lengthOfString; counter++, i++)
+                    for (int i = 6, counter = 1; counter <= lengthOfString; counter++, i++)
                     {
                         byte currentByte = receivedBytes[i];
                         responseMultipleCharactersAsString += Convert.ToChar(currentByte);
                     }
+
+                    // use writing observer and connectedComponentsTool to update the word
                     UIUpdater.UpdatePredictedWord(responseMultipleCharactersAsString);
                     break;
 

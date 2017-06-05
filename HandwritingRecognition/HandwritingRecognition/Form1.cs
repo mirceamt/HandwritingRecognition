@@ -117,7 +117,7 @@ namespace HandwritingRecognition
             lastImage.ThickenBlackPixels();
 
             String lastImageLinearizedAsString = lastImage.LinearizeImageToString();
-            ConnectionManager.SendLinearizedImageForClassification(lastImageLinearizedAsString);
+            ConnectionManager.SendLinearizedImageForClassification(lastImageLinearizedAsString, connectedComponentsTool.GetLatestAdjustmentId());
         }
 
         private void DisplayImageAsAsciiInConsole(CharacterImage image)
