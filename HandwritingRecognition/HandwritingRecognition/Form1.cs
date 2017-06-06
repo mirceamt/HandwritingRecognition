@@ -37,7 +37,7 @@ namespace HandwritingRecognition
             InitializeComponent();
             Logger.Initialize(lastMessageLabel);
             StatusManager.Initialize(statusLabel);
-            UIUpdater.Initialize(this, predictedWordsTextBox);
+            UIUpdater.Initialize(this, predictedWordsTextBox, writingObserver);
             MessagesInterpreter.Initialize(connectedComponentsTool, writingObserver);
 
             Logger.LogInfo("app started");
@@ -171,7 +171,7 @@ namespace HandwritingRecognition
             connectedComponentsTool.Initialize(m_auxiliaryBitmap);
             m_connectedComponents.RemoveRange(0, m_connectedComponents.Count);
 
-            UIUpdater.ResetPredictedWordLabel();
+            UIUpdater.Clear();
             writingObserver.Clear();
         }
 

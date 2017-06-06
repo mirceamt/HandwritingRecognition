@@ -112,6 +112,19 @@ namespace HandwritingRecognition.Writing
             return false;
         }
 
+        Dictionary<int, List<int>> CreateNewDictionary(Dictionary<int, List<int>> oldDictionary)
+        {
+            // TODO fix this creation by doing it manually
+            Dictionary<int, List<int>> ret = new Dictionary<int, List<int>>();
+            foreach(KeyValuePair<int, List<int>> entry in oldDictionary)
+            {
+                List<int> newList = new List<int>(entry.Value);
+                ret.Add(entry.Key, newList);
+            }
+
+            return ret;
+        }
+
         private void GenerateCandidateWordsWithBacktracking(int k, Word w, List<int> keysList, Dictionary<int, List<int>> positionsOfChosenCharsSolution)
         {
             //this backtracking assumes that each connected component has only one letter
@@ -120,7 +133,7 @@ namespace HandwritingRecognition.Writing
                 // solution
                 if (DifferentDictionaries(w.GetPositionsOfChosenCharsDictionary(), positionsOfChosenCharsSolution)) // TODO: eliminate this function if possible
                 {
-                    Dictionary<int, List<int>> solution = new Dictionary<int, List<int>>(positionsOfChosenCharsSolution); // TODO fix this creation by doing it manually
+                    Dictionary<int, List<int>> solution = CreateNewDictionary(positionsOfChosenCharsSolution);
                     Word newWord = new Word(w, solution);
 
                     m_candidateWords.Add(newWord);
@@ -234,8 +247,16 @@ namespace HandwritingRecognition.Writing
             m_candidateWords.Clear();
         }
 
-        public void FinishCurrentWord()
+        public void FinishCurrentWord(string textOnLabel)
         {
+            for (int i = 0; i < m_candidateWords.Count; i++)
+            {
+                if (textOnLabel == m_candidateWords[i].ToString())
+                {
+                    m_currentWord = m_candidateWords[i];
+                    break;
+                }
+            }
             FinishCurrentWordInternal();
             CreateNewCandidateWords();
             UpdateUI();
