@@ -23,10 +23,16 @@ class CNNClassifier:
         
         graph = tf.get_default_graph()
 
-        self.x = graph.get_tensor_by_name('Placeholder:0')
-        self.y_ = graph.get_tensor_by_name('Placeholder_1:0')
-        self.y_conv = graph.get_tensor_by_name('add_4:0')
-        self.keep_prob = graph.get_tensor_by_name('Placeholder_2:0')
+        #self.x = graph.get_tensor_by_name('Placeholder:0')
+        #self.y_ = graph.get_tensor_by_name('Placeholder_1:0')
+        #self.y_conv = graph.get_tensor_by_name('add_4:0')
+        #self.keep_prob = graph.get_tensor_by_name('Placeholder_2:0')
+
+        self.x = graph.get_tensor_by_name('x:0')
+        self.y_ = graph.get_tensor_by_name('y_:0')
+        self.y_conv = graph.get_tensor_by_name('y_conv:0')
+        self.keep_prob = graph.get_tensor_by_name('keep_prob:0')
+
 
     def ReadSimpleExample(self):
         ret = []

@@ -106,9 +106,15 @@ namespace HandwritingRecognition
             ConnectedComponent lastConnectedComponent = m_connectedComponents.Last();
             CharacterImage lastImage = new CharacterImage(lastConnectedComponent);
             DisplayImageAsAsciiInConsole(lastImage);
+    
+
+            // WARNING!!
+            CharacterImage.NormalizeTo32x32Type normalizeTo32x32OpType = CharacterImage.NormalizeTo32x32Type.UnbiasedRatio;
+            //CharacterImage.NormalizeTo32x32Type normalizeTo32x32OpType = CharacterImage.NormalizeTo32x32Type.BiasedRatio;
+
             if (!lastImage.IsNormalizedTo32x32())
             {
-                lastImage.NormalizeTo32x32();
+                lastImage.NormalizeTo32x32(normalizeTo32x32OpType);
             }
             if (!lastImage.IsMadeOnlyBlackAndWhite())
             {
@@ -116,21 +122,22 @@ namespace HandwritingRecognition
             }
             lastImage.ThickenBlackPixels();
 
-            String lastImageLinearizedAsString = lastImage.LinearizeImageToString();
+            String lastImageLinearizedAsString = lastImage.LinearizeImageToString(normalizeTo32x32OpType);
             ConnectionManager.SendLinearizedImageForClassification(lastImageLinearizedAsString);
         }
 
         private void DisplayImageAsAsciiInConsole(CharacterImage image)
         {
+            CharacterImage.NormalizeTo32x32Type normalizeTo32x32OpType = CharacterImage.NormalizeTo32x32Type.UnbiasedRatio;
             if (!image.IsNormalizedTo32x32())
             {
-                image.NormalizeTo32x32();
+                image.NormalizeTo32x32(normalizeTo32x32OpType);
             }
             if (!image.IsMadeOnlyBlackAndWhite())
             {
                 image.MakeOnlyBlackAndWhite();
             }
-            String lastImageLinearizedAsString = image.LinearizeImageToString();
+            String lastImageLinearizedAsString = image.LinearizeImageToString(normalizeTo32x32OpType);
             int cnt = 0;
             for (int i = 0; i < 32; i++)
             {

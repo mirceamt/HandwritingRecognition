@@ -230,6 +230,8 @@ namespace HandwritingRecognition.ImageProcessing
             List<Point> newConnectedComponentPointsList = new List<Point>();
             m_connectedComponentsCounter++;
 
+           
+
             for (int i = 0; i < bmp.Height; i++)
             {
                 for (int j = 0; j < bmp.Width; j++)

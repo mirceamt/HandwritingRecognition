@@ -13,6 +13,12 @@ namespace HandwritingRecognition.ImageProcessing
 {
     class CharacterImage
     {
+        public enum NormalizeTo32x32Type
+        {
+            UnbiasedRatio,
+            BiasedRatio
+        }
+
         public static readonly int[] dx4 = { -1, 0, 1, 0 };
         public static readonly int[] dy4 = { 0, 1, 0, -1 };
 
@@ -45,11 +51,70 @@ namespace HandwritingRecognition.ImageProcessing
             madeOnlyBlackAndWhite = false;
         }
 
-        public void NormalizeTo32x32()
+        public void NormalizeTo32x32(NormalizeTo32x32Type opType)
         {
-            Bitmap resizedBitmap = new Bitmap(m_bitmap, new Size(32, 32));
-            m_bitmap = resizedBitmap;
-            normalizedTo32x32 = true;
+            Bitmap resizedBitmap = null;
+            switch(opType)
+            {
+                case NormalizeTo32x32Type.BiasedRatio:
+                    resizedBitmap = new Bitmap(m_bitmap, new Size(32, 32));
+                    m_bitmap = resizedBitmap;
+                    normalizedTo32x32 = true;
+                    break;
+
+                case NormalizeTo32x32Type.UnbiasedRatio:
+                    int nrColumns = m_bitmap.Width;
+                    int nrLines = m_bitmap.Height;
+                    int maxDimension = Math.Max(nrLines, nrColumns);
+                    resizedBitmap = new Bitmap(maxDimension, maxDimension);
+
+                    Graphics.FromImage(resizedBitmap).Clear(Color.White);
+
+                    int startDrawX = 0, startDrawY = 0;
+                    if (nrLines >= nrColumns)
+                    {
+                        int stanga = 0;
+                        int dreapta = 1;
+                        int side = stanga;
+                        for (int i = nrColumns + 1; i <= nrLines; i++)
+                        {
+                            if (side == stanga)
+                            {
+                                startDrawX++;
+                            }
+                            else
+                            {
+                                // nothing
+                            }
+                            side = 1 - side;
+                        }
+                    }
+                    else
+                    {
+                        // prea putine linii
+                        int sus = 0;
+                        int jos = 1;
+                        int side = sus;
+                        for (int i = nrLines + 1; i <= nrColumns; i++)
+                        {
+                            if (side == sus)
+                            {
+                                startDrawY++;
+                            }
+                            else
+                            {
+                                // nothing
+                            }
+                            side = 1 - side;
+                        }
+                    }
+
+                    Graphics.FromImage(resizedBitmap).DrawImage(m_bitmap, new Point(startDrawX, startDrawY));
+                    resizedBitmap = new Bitmap(resizedBitmap, new Size(32, 32));
+                    m_bitmap = resizedBitmap;
+                    normalizedTo32x32 = true;
+                    break;
+            }
         }
 
         public void MakeOnlyBlackAndWhite()
@@ -81,11 +146,11 @@ namespace HandwritingRecognition.ImageProcessing
             madeOnlyBlackAndWhite = true;
         }
 
-        public String LinearizeImageToString()
+        public String LinearizeImageToString(NormalizeTo32x32Type normalizeTo32x32OperationType)
         {
             if (!normalizedTo32x32)
             {
-                NormalizeTo32x32();
+                NormalizeTo32x32(normalizeTo32x32OperationType);
             }
             if (!madeOnlyBlackAndWhite)
             {
@@ -159,7 +224,8 @@ namespace HandwritingRecognition.ImageProcessing
         {
             if (!IsNormalizedTo32x32())
             {
-                NormalizeTo32x32();
+                //NormalizeTo32x32(NormalizeTo32x32Type.BiasedRatio);
+                NormalizeTo32x32(NormalizeTo32x32Type.UnbiasedRatio);
             }
             if (!IsMadeOnlyBlackAndWhite())
             {

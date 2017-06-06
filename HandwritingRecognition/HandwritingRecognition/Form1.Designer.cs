@@ -45,9 +45,10 @@
             // 
             this.drawPanel.BackColor = System.Drawing.SystemColors.Window;
             this.drawPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.drawPanel.Location = new System.Drawing.Point(166, 38);
+            this.drawPanel.Location = new System.Drawing.Point(332, 73);
+            this.drawPanel.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.drawPanel.Name = "drawPanel";
-            this.drawPanel.Size = new System.Drawing.Size(1398, 321);
+            this.drawPanel.Size = new System.Drawing.Size(2794, 615);
             this.drawPanel.TabIndex = 0;
             this.drawPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.drawPanel_Paint);
             this.drawPanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.drawPanel_MouseDown);
@@ -56,9 +57,10 @@
             // 
             // clearButton
             // 
-            this.clearButton.Location = new System.Drawing.Point(12, 336);
+            this.clearButton.Location = new System.Drawing.Point(24, 646);
+            this.clearButton.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.clearButton.Name = "clearButton";
-            this.clearButton.Size = new System.Drawing.Size(148, 23);
+            this.clearButton.Size = new System.Drawing.Size(296, 44);
             this.clearButton.TabIndex = 12;
             this.clearButton.Text = "Clear";
             this.clearButton.UseVisualStyleBackColor = true;
@@ -66,9 +68,10 @@
             // 
             // testConnectedComponentsWindowButton
             // 
-            this.testConnectedComponentsWindowButton.Location = new System.Drawing.Point(12, 282);
+            this.testConnectedComponentsWindowButton.Location = new System.Drawing.Point(24, 542);
+            this.testConnectedComponentsWindowButton.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.testConnectedComponentsWindowButton.Name = "testConnectedComponentsWindowButton";
-            this.testConnectedComponentsWindowButton.Size = new System.Drawing.Size(143, 35);
+            this.testConnectedComponentsWindowButton.Size = new System.Drawing.Size(286, 67);
             this.testConnectedComponentsWindowButton.TabIndex = 13;
             this.testConnectedComponentsWindowButton.Text = "Display Connected Components";
             this.testConnectedComponentsWindowButton.UseVisualStyleBackColor = true;
@@ -76,9 +79,10 @@
             // 
             // sendBytesToPythonDebugButton
             // 
-            this.sendBytesToPythonDebugButton.Location = new System.Drawing.Point(13, 232);
+            this.sendBytesToPythonDebugButton.Location = new System.Drawing.Point(26, 446);
+            this.sendBytesToPythonDebugButton.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.sendBytesToPythonDebugButton.Name = "sendBytesToPythonDebugButton";
-            this.sendBytesToPythonDebugButton.Size = new System.Drawing.Size(142, 35);
+            this.sendBytesToPythonDebugButton.Size = new System.Drawing.Size(284, 67);
             this.sendBytesToPythonDebugButton.TabIndex = 14;
             this.sendBytesToPythonDebugButton.Text = "Send Bytes To Python";
             this.sendBytesToPythonDebugButton.UseVisualStyleBackColor = true;
@@ -86,9 +90,10 @@
             // 
             // startPythonClientButton
             // 
-            this.startPythonClientButton.Location = new System.Drawing.Point(13, 181);
+            this.startPythonClientButton.Location = new System.Drawing.Point(26, 348);
+            this.startPythonClientButton.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.startPythonClientButton.Name = "startPythonClientButton";
-            this.startPythonClientButton.Size = new System.Drawing.Size(142, 36);
+            this.startPythonClientButton.Size = new System.Drawing.Size(284, 69);
             this.startPythonClientButton.TabIndex = 15;
             this.startPythonClientButton.Text = "Start Python Client";
             this.startPythonClientButton.UseVisualStyleBackColor = true;
@@ -98,9 +103,10 @@
             // 
             this.statusLabel.AutoSize = true;
             this.statusLabel.ForeColor = System.Drawing.Color.Red;
-            this.statusLabel.Location = new System.Drawing.Point(1364, 362);
+            this.statusLabel.Location = new System.Drawing.Point(2728, 696);
+            this.statusLabel.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.statusLabel.Name = "statusLabel";
-            this.statusLabel.Size = new System.Drawing.Size(94, 13);
+            this.statusLabel.Size = new System.Drawing.Size(186, 25);
             this.statusLabel.TabIndex = 16;
             this.statusLabel.Text = "Status: Not Ready";
             // 
@@ -108,18 +114,20 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(163, 369);
+            this.label1.Location = new System.Drawing.Point(326, 710);
+            this.label1.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(67, 13);
+            this.label1.Size = new System.Drawing.Size(126, 26);
             this.label1.TabIndex = 17;
             this.label1.Text = "Messages:";
             // 
             // lastMessageLabel
             // 
             this.lastMessageLabel.AutoSize = true;
-            this.lastMessageLabel.Location = new System.Drawing.Point(232, 369);
+            this.lastMessageLabel.Location = new System.Drawing.Point(464, 710);
+            this.lastMessageLabel.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.lastMessageLabel.Name = "lastMessageLabel";
-            this.lastMessageLabel.Size = new System.Drawing.Size(10, 13);
+            this.lastMessageLabel.Size = new System.Drawing.Size(18, 25);
             this.lastMessageLabel.TabIndex = 18;
             this.lastMessageLabel.Text = " ";
             // 
@@ -127,25 +135,28 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(163, 12);
+            this.label2.Location = new System.Drawing.Point(326, 23);
+            this.label2.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(100, 13);
+            this.label2.Size = new System.Drawing.Size(185, 26);
             this.label2.TabIndex = 19;
             this.label2.Text = "Predicted word: ";
             // 
             // predictedWordLabel
             // 
             this.predictedWordLabel.AutoSize = true;
-            this.predictedWordLabel.Location = new System.Drawing.Point(260, 12);
+            this.predictedWordLabel.Location = new System.Drawing.Point(520, 23);
+            this.predictedWordLabel.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.predictedWordLabel.Name = "predictedWordLabel";
-            this.predictedWordLabel.Size = new System.Drawing.Size(0, 13);
+            this.predictedWordLabel.Size = new System.Drawing.Size(0, 25);
             this.predictedWordLabel.TabIndex = 20;
             // 
             // collectNewDataButton
             // 
-            this.collectNewDataButton.Location = new System.Drawing.Point(13, 131);
+            this.collectNewDataButton.Location = new System.Drawing.Point(26, 252);
+            this.collectNewDataButton.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.collectNewDataButton.Name = "collectNewDataButton";
-            this.collectNewDataButton.Size = new System.Drawing.Size(142, 39);
+            this.collectNewDataButton.Size = new System.Drawing.Size(284, 75);
             this.collectNewDataButton.TabIndex = 21;
             this.collectNewDataButton.Text = "Collect New Data";
             this.collectNewDataButton.UseVisualStyleBackColor = true;
@@ -153,9 +164,9 @@
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1576, 391);
+            this.ClientSize = new System.Drawing.Size(2988, 752);
             this.Controls.Add(this.collectNewDataButton);
             this.Controls.Add(this.predictedWordLabel);
             this.Controls.Add(this.label2);
@@ -167,6 +178,7 @@
             this.Controls.Add(this.testConnectedComponentsWindowButton);
             this.Controls.Add(this.clearButton);
             this.Controls.Add(this.drawPanel);
+            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Name = "Form1";
             this.Text = "Recunoasterea Textului Scris";
             this.ResumeLayout(false);

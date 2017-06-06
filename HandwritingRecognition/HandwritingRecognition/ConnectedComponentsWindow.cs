@@ -40,7 +40,8 @@ namespace HandwritingRecognition
             CharacterImage currentCharacterImage = new CharacterImage(currentComponent);
             if (!currentCharacterImage.IsNormalizedTo32x32())
             {
-                currentCharacterImage.NormalizeTo32x32();
+                //currentCharacterImage.NormalizeTo32x32(CharacterImage.NormalizeTo32x32Type.BiasedRatio);
+                currentCharacterImage.NormalizeTo32x32(CharacterImage.NormalizeTo32x32Type.UnbiasedRatio);
             }
             if (!currentCharacterImage.IsMadeOnlyBlackAndWhite())
             {

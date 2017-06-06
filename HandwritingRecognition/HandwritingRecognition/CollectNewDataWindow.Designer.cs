@@ -39,9 +39,10 @@
             // 
             // clearButton
             // 
-            this.clearButton.Location = new System.Drawing.Point(12, 2);
+            this.clearButton.Location = new System.Drawing.Point(24, 4);
+            this.clearButton.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.clearButton.Name = "clearButton";
-            this.clearButton.Size = new System.Drawing.Size(63, 37);
+            this.clearButton.Size = new System.Drawing.Size(126, 71);
             this.clearButton.TabIndex = 22;
             this.clearButton.Text = "Clear";
             this.clearButton.UseVisualStyleBackColor = true;
@@ -51,9 +52,10 @@
             // 
             this.drawPanel.BackColor = System.Drawing.SystemColors.Window;
             this.drawPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.drawPanel.Location = new System.Drawing.Point(12, 45);
+            this.drawPanel.Location = new System.Drawing.Point(24, 87);
+            this.drawPanel.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.drawPanel.Name = "drawPanel";
-            this.drawPanel.Size = new System.Drawing.Size(1430, 583);
+            this.drawPanel.Size = new System.Drawing.Size(2624, 1346);
             this.drawPanel.TabIndex = 21;
             this.drawPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.drawPanel_Paint);
             this.drawPanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.drawPanel_MouseDown);
@@ -62,9 +64,10 @@
             // 
             // saveButton
             // 
-            this.saveButton.Location = new System.Drawing.Point(82, 2);
+            this.saveButton.Location = new System.Drawing.Point(164, 4);
+            this.saveButton.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.saveButton.Name = "saveButton";
-            this.saveButton.Size = new System.Drawing.Size(62, 37);
+            this.saveButton.Size = new System.Drawing.Size(124, 71);
             this.saveButton.TabIndex = 23;
             this.saveButton.Text = "Save";
             this.saveButton.UseVisualStyleBackColor = true;
@@ -73,17 +76,19 @@
             // errorLabel
             // 
             this.errorLabel.AutoSize = true;
-            this.errorLabel.Location = new System.Drawing.Point(449, 14);
+            this.errorLabel.Location = new System.Drawing.Point(898, 27);
+            this.errorLabel.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.errorLabel.Name = "errorLabel";
-            this.errorLabel.Size = new System.Drawing.Size(41, 13);
+            this.errorLabel.Size = new System.Drawing.Size(83, 25);
             this.errorLabel.TabIndex = 24;
             this.errorLabel.Text = "Error: ?";
             // 
             // saveOneButton
             // 
-            this.saveOneButton.Location = new System.Drawing.Point(150, 2);
+            this.saveOneButton.Location = new System.Drawing.Point(300, 4);
+            this.saveOneButton.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.saveOneButton.Name = "saveOneButton";
-            this.saveOneButton.Size = new System.Drawing.Size(66, 37);
+            this.saveOneButton.Size = new System.Drawing.Size(132, 71);
             this.saveOneButton.TabIndex = 25;
             this.saveOneButton.Text = "Save One";
             this.saveOneButton.UseVisualStyleBackColor = true;
@@ -92,24 +97,26 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(258, 14);
+            this.label1.Location = new System.Drawing.Point(516, 27);
+            this.label1.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(36, 13);
+            this.label1.Size = new System.Drawing.Size(71, 25);
             this.label1.TabIndex = 26;
             this.label1.Text = "Label:";
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(300, 11);
+            this.textBox1.Location = new System.Drawing.Point(600, 21);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(44, 20);
+            this.textBox1.Size = new System.Drawing.Size(84, 31);
             this.textBox1.TabIndex = 27;
             // 
             // CollectNewDataWindow
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1454, 640);
+            this.ClientSize = new System.Drawing.Size(2770, 1484);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.saveOneButton);
@@ -117,6 +124,7 @@
             this.Controls.Add(this.saveButton);
             this.Controls.Add(this.clearButton);
             this.Controls.Add(this.drawPanel);
+            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Name = "CollectNewDataWindow";
             this.Text = "CollectNewData";
             this.ResumeLayout(false);
