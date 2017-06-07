@@ -25,6 +25,11 @@ namespace HandwritingRecognition.ImageProcessing
 
             m_visitedCells = new bool[m_height, m_width];
             m_existingConnectedComponents = new List<ConnectedComponent>();
+            m_latestRemovedConnectedComponents = new List<ConnectedComponent>();
+            m_latestAddedConnectedComponent = null;
+
+            m_adjustmentsDoneCounter = 0;
+            m_adjustmentsDone = new Dictionary<int, Tuple<List<ConnectedComponent>, ConnectedComponent>>();
 
             m_connectedComponentsCounter = 0;
             
@@ -213,11 +218,17 @@ namespace HandwritingRecognition.ImageProcessing
             //    m_existingConnectedComponents.RemoveAt(indexToDelete);
             //}
 
-
+            m_latestRemovedConnectedComponents = m_existingConnectedComponents.FindAll(x => oldConnectedComponentsIDs.Contains(x.ID));
             m_existingConnectedComponents.RemoveAll(x => oldConnectedComponentsIDs.Contains(x.ID));
 
             ConnectedComponent newComponent = new ConnectedComponent(newComponentIndex, newComponentPointsList);
             newComponent.NormalizeUsingTranslation();
+
+            m_latestAddedConnectedComponent = newComponent;
+
+            m_adjustmentsDoneCounter++;
+            m_adjustmentsDone.Add(m_adjustmentsDoneCounter, new Tuple<List<ConnectedComponent>, ConnectedComponent>(m_latestRemovedConnectedComponents, m_latestAddedConnectedComponent));
+
             m_existingConnectedComponents.Add(newComponent);
         }
 
@@ -250,6 +261,43 @@ namespace HandwritingRecognition.ImageProcessing
             return ret;
         }
 
+        ConnectedComponent GetConnectedComponentsById(int idParam)
+        {
+            for (int i = 0; i < m_existingConnectedComponents.Count; i++)
+            {
+                if (m_existingConnectedComponents[i].ID == idParam)
+                {
+                    return m_existingConnectedComponents[i];
+                }
+            }
+            return null;
+        }
+
+        public int GetLatestAdjustmentId()
+        {
+            return m_adjustmentsDoneCounter;
+        }
+
+        public Tuple<List<ConnectedComponent>, ConnectedComponent> GetAdjustmentById(int id)
+        {
+            if (m_adjustmentsDone.ContainsKey(id))
+            {
+                return m_adjustmentsDone[id];
+            }
+            return null;
+        }
+
+        List<ConnectedComponent> GetLatestRemovedConnectedComponents()
+        {
+            return m_latestRemovedConnectedComponents;
+        }
+
+        ConnectedComponent GetLatestAddedConnectedComponent()
+        {
+            return m_latestAddedConnectedComponent;
+        }
+
+
         private bool IsInternalPoint(Point p)
         {
             return 0 <= p.X && p.X < m_height && 0 <= p.Y && p.Y < m_width;
@@ -278,7 +326,13 @@ namespace HandwritingRecognition.ImageProcessing
             }
         }
 
+
         List<ConnectedComponent> m_existingConnectedComponents = null;
+        List<ConnectedComponent> m_latestRemovedConnectedComponents = null;
+        ConnectedComponent m_latestAddedConnectedComponent = null;
+
+        Dictionary<int, Tuple<List<ConnectedComponent>, ConnectedComponent>> m_adjustmentsDone = null;
+        int m_adjustmentsDoneCounter = 0;
 
         private Color[,] m_lastColorMatrix = null;
         private int[,] m_connectedComponentsMatrix = null;

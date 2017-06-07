@@ -138,11 +138,16 @@ namespace HandwritingRecognition.Communication
             }
         }
 
-        internal static void SendLinearizedImageForClassification(string lastImageLinearizedAsString)
-        {
-            byte[] bytesToSend = new byte[1030];
-            bytesToSend[0] = 1;
-            int cnt = 0;
+        internal static void SendLinearizedImageForClassification(string lastImageLinearizedAsString, int latestAdjustmentId)
+        {   
+            byte[] bytesToSend = new byte[1060];
+            byte[] latestAdjustmentIdBytes = CommonUtils.TransformIntTo4Bytes(latestAdjustmentId);
+            int cnt = -1;
+            bytesToSend[++cnt] = 1;
+            bytesToSend[++cnt] = latestAdjustmentIdBytes[0];
+            bytesToSend[++cnt] = latestAdjustmentIdBytes[1];
+            bytesToSend[++cnt] = latestAdjustmentIdBytes[2];
+            bytesToSend[++cnt] = latestAdjustmentIdBytes[3];            
 
             if (lastImageLinearizedAsString.Length != 1024)
             {

@@ -87,11 +87,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\Paths.cs" />
     <Compile Include="Utils\ApplicationUseManager.cs" />
+    <Compile Include="Utils\CommonUtils.cs" />
     <Compile Include="Utils\Logger.cs" />
     <Compile Include="Utils\LoggerDataSource.cs" />
     <Compile Include="Utils\LogModel.cs" />
     <Compile Include="Utils\StatusManager.cs" />
     <Compile Include="Utils\UIUpdater.cs" />
+    <Compile Include="Writing\Word.cs" />
+    <Compile Include="Writing\WritingObserver.cs" />
     <EmbeddedResource Include="CollectNewDataWindow.resx">
       <DependentUpon>CollectNewDataWindow.cs</DependentUpon>
     </EmbeddedResource>
@@ -107,6 +110,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="ClassDiagram1.cd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

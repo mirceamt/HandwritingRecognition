@@ -15,6 +15,7 @@ using HandwritingRecognition.Debugging;
 using HandwritingRecognition.Classification;
 using HandwritingRecognition.Communication;
 using HandwritingRecognition.Utils;
+using HandwritingRecognition.Writing;
 
 namespace HandwritingRecognition
 {
@@ -27,6 +28,7 @@ namespace HandwritingRecognition
         Bitmap m_auxiliaryBitmap;
 
         ConnectedComponentsTool connectedComponentsTool = new ConnectedComponentsTool();
+        WritingObserver writingObserver = new WritingObserver();
 
         List<ConnectedComponent> m_connectedComponents;
 
@@ -35,7 +37,8 @@ namespace HandwritingRecognition
             InitializeComponent();
             Logger.Initialize(lastMessageLabel);
             StatusManager.Initialize(statusLabel);
-            UIUpdater.Initialize(predictedWordLabel);
+            UIUpdater.Initialize(this, predictedWordsTextBox, writingObserver);
+            MessagesInterpreter.Initialize(connectedComponentsTool, writingObserver);
 
             Logger.LogInfo("app started");
             
@@ -122,8 +125,8 @@ namespace HandwritingRecognition
             }
             lastImage.ThickenBlackPixels();
 
-            String lastImageLinearizedAsString = lastImage.LinearizeImageToString(normalizeTo32x32OpType);
-            ConnectionManager.SendLinearizedImageForClassification(lastImageLinearizedAsString);
+            String lastImageLinearizedAsString = lastImage.LinearizeImageToString();
+            ConnectionManager.SendLinearizedImageForClassification(lastImageLinearizedAsString, connectedComponentsTool.GetLatestAdjustmentId());
         }
 
         private void DisplayImageAsAsciiInConsole(CharacterImage image)
@@ -175,7 +178,8 @@ namespace HandwritingRecognition
             connectedComponentsTool.Initialize(m_auxiliaryBitmap);
             m_connectedComponents.RemoveRange(0, m_connectedComponents.Count);
 
-            UIUpdater.ResetPredictedWordLabel();
+            UIUpdater.Clear();
+            writingObserver.Clear();
         }
 
         private void testConnectedComponentsWindowButton_Click(object sender, EventArgs e)

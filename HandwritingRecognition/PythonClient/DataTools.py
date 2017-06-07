@@ -50,7 +50,7 @@ def classVectorToCharacter(classVector):
     index = classVector.index(max(classVector))
     return indexToCharacter(index)
 
-def classVectorToMultipleCharacters(classVectorParam, possibilites = None):
+def classVectorToMultipleCharacters(classVectorParam, spacesBetween = False, possibilites = None):
     classVector = classVectorParam[:]
 
     if possibilites is None:
@@ -60,7 +60,9 @@ def classVectorToMultipleCharacters(classVectorParam, possibilites = None):
     minValue = min(classVector) - 1.0
     for i in range(0, possibilites):
         index = classVector.index(max(classVector))
-        ret += indexToCharacter(index) + ' '
+        ret += indexToCharacter(index)
+        if spacesBetween == True:
+            ret += ' '
         classVector[index] = minValue     
     return ret
 
