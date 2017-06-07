@@ -10,6 +10,8 @@ namespace HandwritingRecognition.Writing
     {
 
     }
+
+
     class LanguageDictionary
     {
     }

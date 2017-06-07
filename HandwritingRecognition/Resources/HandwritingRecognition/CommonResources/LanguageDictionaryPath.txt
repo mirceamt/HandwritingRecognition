@@ -1,0 +1,3 @@
+english
+F:\Licenta\HandwritingRecognition\HandwritingRecognition\Resources\LanguageDictionaries\english.txt
+F:\Licenta\HandwritingRecognition\HandwritingRecognition\Resources\LanguageDictionaries\english_alpha.txt
