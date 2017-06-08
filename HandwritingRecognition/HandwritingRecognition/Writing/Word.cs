@@ -130,6 +130,12 @@ namespace HandwritingRecognition.Writing
                 }
             }
 
+            if (ret.Length > 1)
+            {
+                String allButFirstChar = ret.Substring(1);
+                ret = ret[0] + allButFirstChar.ToLower();
+            }
+
             return ret;
         }
 

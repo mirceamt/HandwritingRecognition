@@ -12,7 +12,8 @@ namespace HandwritingRecognition.Writing
     class WritingObserver
     {
         List<Word> m_finishedWords = new List<Word>();
-        List<Word> m_candidateWords = new List<Word>();
+        //List<Word> m_candidateWords = new List<Word>();
+        Dictionary<String, Word> m_candidateWords = new Dictionary<String, Word>();
         Word m_currentWord = null;
         LanguageDictionary languageDictionary = null;
 
@@ -134,7 +135,8 @@ namespace HandwritingRecognition.Writing
         {
             Dictionary<int, List<int>> solution = CreateNewDictionary(positionsOfChosenCharsSolution);
             Word newWord = new Word(w, solution);
-            if (!languageDictionary.ExistsPrefix(newWord.ToString().ToLower()))
+            String newWordString = newWord.ToString();
+            if (!languageDictionary.ExistsPrefix(newWordString.ToLower()))
             {
                 return;
             }
@@ -146,9 +148,10 @@ namespace HandwritingRecognition.Writing
                 //if (DifferentDictionaries(w.GetPositionsOfChosenCharsDictionary(), positionsOfChosenCharsSolution)) // TODO: eliminate this function if possible
                 // the if statement from above is unnecessary since we were comparing the solution word with the initial word by their
                 // positions of chosen chars.
-                if (newWord.ToString().ToLower() != w.ToString().ToLower())
+                if (newWordString.ToLower() != w.ToString().ToLower())
                 {
-                    m_candidateWords.Add(newWord);
+                    m_candidateWords[newWordString] = newWord;
+                    //m_candidateWords.Add(newWord);
                 }
                 return;
             }
@@ -175,7 +178,8 @@ namespace HandwritingRecognition.Writing
 
             // create new candidate words based on the current word
             m_candidateWords.Clear();
-            m_candidateWords.Add(m_currentWord);
+            //m_candidateWords.Add(m_currentWord);
+            m_candidateWords[m_currentWord.ToString()] = m_currentWord;
 
             Dictionary<int, List<String>> possibleChars = m_currentWord.GetPossibleCharsDictionary();
             List<int> keysList = possibleChars.Keys.ToList();
@@ -261,11 +265,11 @@ namespace HandwritingRecognition.Writing
 
         public void FinishCurrentWord(string textOnLabel)
         {
-            for (int i = 0; i < m_candidateWords.Count; i++)
+            foreach(KeyValuePair<String, Word> pair in m_candidateWords)
             {
-                if (textOnLabel == m_candidateWords[i].ToString())
+                if (pair.Key == textOnLabel)
                 {
-                    m_currentWord = m_candidateWords[i];
+                    m_currentWord = pair.Value;
                     break;
                 }
             }
