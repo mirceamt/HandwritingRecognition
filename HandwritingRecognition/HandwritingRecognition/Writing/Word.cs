@@ -83,10 +83,13 @@ namespace HandwritingRecognition.Writing
 
         public void AddConnectedComponent(int id, ConnectedComponent connectedComponent, List<String> possibleChars, List<int> positionsOfChosenChars)
         {
-            m_possibleChars.Add(id, possibleChars);
-            m_positionsOfChosenChars.Add(id, positionsOfChosenChars);
-            m_connectedComponents.Add(id, connectedComponent);
-            m_orderOfComponents.Add(id);
+            m_possibleChars[id] = possibleChars;
+            m_positionsOfChosenChars[id] = positionsOfChosenChars;
+            m_connectedComponents[id] = connectedComponent;
+            if (!m_orderOfComponents.Contains(id))
+            {
+                m_orderOfComponents.Add(id);
+            }
         }
 
         public void RemoveConnectedComponents(List<ConnectedComponent> connectedComponentsToRemove)

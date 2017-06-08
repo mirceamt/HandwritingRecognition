@@ -32,9 +32,13 @@ namespace HandwritingRecognition
 
         List<ConnectedComponent> m_connectedComponents;
 
+        LanguageDictionary languageDictionary = new LanguageDictionary();
+
         public Form1()
         {
             InitializeComponent();
+            languageDictionary.Load("english", "alpha");
+            writingObserver.Initialize(languageDictionary);
             Logger.Initialize(lastMessageLabel);
             StatusManager.Initialize(statusLabel);
             UIUpdater.Initialize(this, predictedWordsTextBox, writingObserver);

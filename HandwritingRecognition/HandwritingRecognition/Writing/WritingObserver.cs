@@ -14,9 +14,15 @@ namespace HandwritingRecognition.Writing
         List<Word> m_finishedWords = new List<Word>();
         List<Word> m_candidateWords = new List<Word>();
         Word m_currentWord = null;
+        LanguageDictionary languageDictionary = null;
 
         public WritingObserver()
         {
+        }
+
+        public void Initialize(LanguageDictionary languageDictionaryParam)
+        {
+            languageDictionary = languageDictionaryParam;
         }
 
         public void Clear()
@@ -62,7 +68,7 @@ namespace HandwritingRecognition.Writing
         private bool DifferentDictionaries(Dictionary<int, List<int>> a, Dictionary<int, List<int>> b)
         {
             // TODO!!!!
-            return true;
+            //return true;
             if (a.Count != b.Count)
             {
                 return true;
@@ -114,7 +120,6 @@ namespace HandwritingRecognition.Writing
 
         Dictionary<int, List<int>> CreateNewDictionary(Dictionary<int, List<int>> oldDictionary)
         {
-            // TODO fix this creation by doing it manually
             Dictionary<int, List<int>> ret = new Dictionary<int, List<int>>();
             foreach(KeyValuePair<int, List<int>> entry in oldDictionary)
             {
@@ -135,8 +140,10 @@ namespace HandwritingRecognition.Writing
                 {
                     Dictionary<int, List<int>> solution = CreateNewDictionary(positionsOfChosenCharsSolution);
                     Word newWord = new Word(w, solution);
-
-                    m_candidateWords.Add(newWord);
+                    if (languageDictionary.ExistsPrefix(newWord.ToString()))
+                    {
+                        m_candidateWords.Add(newWord);
+                    }
                 }
                 return;
             }
