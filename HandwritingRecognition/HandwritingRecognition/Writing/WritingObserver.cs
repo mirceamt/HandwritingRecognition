@@ -132,18 +132,23 @@ namespace HandwritingRecognition.Writing
 
         private void GenerateCandidateWordsWithBacktracking(int k, Word w, List<int> keysList, Dictionary<int, List<int>> positionsOfChosenCharsSolution)
         {
+            Dictionary<int, List<int>> solution = CreateNewDictionary(positionsOfChosenCharsSolution);
+            Word newWord = new Word(w, solution);
+            if (!languageDictionary.ExistsPrefix(newWord.ToString().ToLower()))
+            {
+                return;
+            }
+
             //this backtracking assumes that each connected component has only one letter
             if (k >= keysList.Count)
             {
                 // solution
-                if (DifferentDictionaries(w.GetPositionsOfChosenCharsDictionary(), positionsOfChosenCharsSolution)) // TODO: eliminate this function if possible
+                //if (DifferentDictionaries(w.GetPositionsOfChosenCharsDictionary(), positionsOfChosenCharsSolution)) // TODO: eliminate this function if possible
+                // the if statement from above is unnecessary since we were comparing the solution word with the initial word by their
+                // positions of chosen chars.
+                if (newWord.ToString().ToLower() != w.ToString().ToLower())
                 {
-                    Dictionary<int, List<int>> solution = CreateNewDictionary(positionsOfChosenCharsSolution);
-                    Word newWord = new Word(w, solution);
-                    if (languageDictionary.ExistsPrefix(newWord.ToString()))
-                    {
-                        m_candidateWords.Add(newWord);
-                    }
+                    m_candidateWords.Add(newWord);
                 }
                 return;
             }
@@ -151,7 +156,7 @@ namespace HandwritingRecognition.Writing
 
             List<int> currentList = new List<int>();
 
-            for (int i = 0; i < 2; i++)
+            for (int i = 0; i < 3; i++)
             {
                 currentList.Clear();
                 currentList.Add(i);

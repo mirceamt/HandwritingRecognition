@@ -118,6 +118,10 @@ namespace HandwritingRecognition.Writing
             {
                 int currentComponentId = m_orderOfComponents[i];
                 List<String> currentPossibleChars = m_possibleChars[currentComponentId];
+                if (!m_positionsOfChosenChars.ContainsKey(currentComponentId))
+                {
+                    continue;
+                }
                 List<int> currentPositionsOfChosenChars = m_positionsOfChosenChars[currentComponentId];
 
                 for (int j = 0; j < currentPossibleChars.Count; j++)

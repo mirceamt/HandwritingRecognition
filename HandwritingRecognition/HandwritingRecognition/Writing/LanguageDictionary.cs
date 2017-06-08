@@ -161,7 +161,7 @@ namespace HandwritingRecognition.Writing
             {
                 return false;
             }
-            return ExistsPrefix(nod, s, k + 1);
+            return ExistsPrefix(nod.Sons[sonIndex], s, k + 1);
         }
 
         public bool ExistsPrefix(String s)
