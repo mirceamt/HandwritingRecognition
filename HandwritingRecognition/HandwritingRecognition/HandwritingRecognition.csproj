@@ -99,6 +99,9 @@
     <EmbeddedResource Include="CollectNewDataWindow.resx">
       <DependentUpon>CollectNewDataWindow.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ConnectedComponentsWindow.resx">
+      <DependentUpon>ConnectedComponentsWindow.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

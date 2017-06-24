@@ -38,21 +38,46 @@ namespace HandwritingRecognition
 
             ConnectedComponent currentComponent = DebugConnectedComponentsTool.ConnectedComponents[index];
             CharacterImage currentCharacterImage = new CharacterImage(currentComponent);
-            if (!currentCharacterImage.IsNormalizedTo32x32())
-            {
-                //currentCharacterImage.NormalizeTo32x32(CharacterImage.NormalizeTo32x32Type.BiasedRatio);
-                currentCharacterImage.NormalizeTo32x32(CharacterImage.NormalizeTo32x32Type.UnbiasedRatio);
-            }
-            if (!currentCharacterImage.IsMadeOnlyBlackAndWhite())
-            {
-                currentCharacterImage.MakeOnlyBlackAndWhite();
-            }
-            currentCharacterImage.ThickenBlackPixels();
+            //if (!currentCharacterImage.IsNormalizedTo32x32())
+            //{
+            //    //currentCharacterImage.NormalizeTo32x32(CharacterImage.NormalizeTo32x32Type.BiasedRatio);
+            //    currentCharacterImage.NormalizeTo32x32(CharacterImage.NormalizeTo32x32Type.UnbiasedRatio);
+            //}
+            //if (!currentCharacterImage.IsMadeOnlyBlackAndWhite())
+            //{
+            //    currentCharacterImage.MakeOnlyBlackAndWhite();
+            //}
+            //currentCharacterImage.ThickenBlackPixels();
 
             m_auxiliaryBitmap = currentCharacterImage.GetBitmap();
 
             connectedComponentPanel.Refresh();
             connectedComponentPanel.CreateGraphics().DrawImageUnscaled(m_auxiliaryBitmap, new Point(0, 0));
+
+            int dimMax = Math.Max(m_auxiliaryBitmap.Height, m_auxiliaryBitmap.Width);
+            Bitmap aux1 = new Bitmap(m_auxiliaryBitmap, dimMax, dimMax);
+            panel1.Refresh();
+            panel1.CreateGraphics().DrawImageUnscaled(aux1, new Point(0, 0));
+
+            currentCharacterImage.AddWhiteLinesOrColumns();
+            Bitmap aux2 = currentCharacterImage.GetBitmap();
+            panel2.Refresh();
+            panel2.CreateGraphics().DrawImageUnscaled(aux2, new Point(0, 0));
+
+            currentCharacterImage.NormalizeTo32x32(CharacterImage.NormalizeTo32x32Type.BiasedRatio);
+            Bitmap aux3 = currentCharacterImage.GetBitmap();
+            panel3.Refresh();
+            panel3.CreateGraphics().DrawImageUnscaled(aux3, new Point(0, 0));
+
+            currentCharacterImage.MakeOnlyBlackAndWhite();
+            Bitmap aux4 = currentCharacterImage.GetBitmap();
+            panel4.Refresh();
+            panel4.CreateGraphics().DrawImageUnscaled(aux4, new Point(0, 0));
+
+            currentCharacterImage.ThickenBlackPixels();
+            Bitmap aux5 = currentCharacterImage.GetBitmap();
+            panel5.Refresh();
+            panel5.CreateGraphics().DrawImageUnscaled(aux5, new Point(0, 0));
         }
 
         private void connectedComponentPanel_Paint(object sender, PaintEventArgs e)
