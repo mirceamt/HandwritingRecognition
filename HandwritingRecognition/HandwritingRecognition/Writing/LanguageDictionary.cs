@@ -61,6 +61,12 @@ namespace HandwritingRecognition.Writing
 
     class LanguageDictionary
     {
+        public enum PrefixType
+        {
+            Word,
+            Prefix,
+            NotExists          
+        };
         private Node root = new Node();
 
         public LanguageDictionary()
@@ -167,6 +173,30 @@ namespace HandwritingRecognition.Writing
         public bool ExistsPrefix(String s)
         {
             return ExistsPrefix(root, s, 0);
+        }
+
+        public PrefixType GetPrefixType(Node nod, string s, int k)
+        {
+            if (k == s.Length)
+            {
+                if (nod.IsFinalWord)
+                {
+                    return PrefixType.Word;
+                }
+                return PrefixType.Prefix;
+            }
+
+            int sonIndex = (int)s[k];
+            if (nod.Sons[sonIndex] == null)
+            {
+                return PrefixType.NotExists;
+            }
+            return GetPrefixType(nod.Sons[sonIndex], s, k + 1);
+        }
+
+        public PrefixType GetPrefixType(string s)
+        {
+            return GetPrefixType(root, s, 0);
         }
     }
 }

@@ -171,14 +171,14 @@ namespace HandwritingRecognition.Utils
             return ret;
         }
 
-        public static void CreateLabelsForCandidateWords(Dictionary<String, Word> candidateWords)
+        public static void CreateLabelsForCandidateWords(List<Word> candidateWords)
         {
             RemoveLabelsForCandidateWordsFromForm();
             Label lastLabel = null;
             int padding = 8;
 
             int cnt = 0;
-            foreach(KeyValuePair<String, Word> pair in candidateWords)
+            for (int i = 0; i < candidateWords.Count; i++)
             {
                 Label label = new Label();
                 label.AutoSize = true;
@@ -193,7 +193,7 @@ namespace HandwritingRecognition.Utils
 
                 label.Name = "label_candidateWord_" + cnt.ToString();
                 cnt++;
-                label.Text = pair.Key;
+                label.Text = candidateWords[i].ToString();
                 if (lastLabel == null)
                 {
                     label.Location = new Point(162, 30);

@@ -11,6 +11,22 @@ namespace HandwritingRecognition.Writing
 {
     class WritingObserver
     {
+        class WordComparerByPriority : Comparer<Word>
+        {
+            public override int Compare(Word x, Word y)
+            {
+                if (x.Priority > y.Priority)
+                {
+                    return -1;
+                }
+                if (x.Priority < y.Priority)
+                {
+                    return 1;
+                }
+                return 0;
+            }
+        }
+
         List<Word> m_finishedWords = new List<Word>();
         //List<Word> m_candidateWords = new List<Word>();
         Dictionary<String, Word> m_candidateWords = new Dictionary<String, Word>();
@@ -136,7 +152,8 @@ namespace HandwritingRecognition.Writing
             Dictionary<int, List<int>> solution = CreateNewDictionary(positionsOfChosenCharsSolution);
             Word newWord = new Word(w, solution);
             String newWordString = newWord.ToString();
-            if (!languageDictionary.ExistsPrefix(newWordString.ToLower()))
+            LanguageDictionary.PrefixType prefixType = languageDictionary.GetPrefixType(newWordString.ToLower());
+            if (prefixType == LanguageDictionary.PrefixType.NotExists)
             {
                 return;
             }
@@ -150,6 +167,7 @@ namespace HandwritingRecognition.Writing
                 // positions of chosen chars.
                 if (newWordString.ToLower() != w.ToString().ToLower())
                 {
+                    newWord.SetPriority(prefixType);
                     m_candidateWords[newWordString] = newWord;
                     //m_candidateWords.Add(newWord);
                 }
@@ -178,7 +196,10 @@ namespace HandwritingRecognition.Writing
 
             // create new candidate words based on the current word
             m_candidateWords.Clear();
-            //m_candidateWords.Add(m_currentWord);
+
+            //LanguageDictionary.PrefixType prefixTypeOfCurrentWord = languageDictionary.GetPrefixType(m_currentWord.ToString().ToLower());
+            //m_currentWord.SetPriority(prefixTypeOfCurrentWord);
+            m_currentWord.Priority = 15; // show the first predicted word after those ewords that exist in the dictionary
             m_candidateWords[m_currentWord.ToString()] = m_currentWord;
 
             Dictionary<int, List<String>> possibleChars = m_currentWord.GetPossibleCharsDictionary();
@@ -188,12 +209,32 @@ namespace HandwritingRecognition.Writing
             GenerateCandidateWordsWithBacktracking(0, m_currentWord, keysList, positonsOfChosenCharsSolution);
         }
 
+        private List<Word> SortCandidateWordsByPriority()
+        {
+            List<Word> sortedWordsByPriority = new List<Word>();
+
+            foreach(KeyValuePair<string, Word> pair in m_candidateWords)
+            {
+                sortedWordsByPriority.Add(pair.Value);
+            }
+
+            sortedWordsByPriority.Sort(new WordComparerByPriority());
+
+            return sortedWordsByPriority;
+        }
+
         private void UpdateUI()
         {
-            String allPredictedWords = this.ToString();
-            UIUpdater.SetPredictedWordsText(allPredictedWords);
+            List<Word> sortedWordsByPriority = SortCandidateWordsByPriority();
+            if (sortedWordsByPriority.Count > 0)
+            {
+                m_currentWord = sortedWordsByPriority[0];
+            }
 
-            UIUpdater.CreateLabelsForCandidateWords(m_candidateWords);
+            String allPredictedWordsText = this.ToString();
+            UIUpdater.SetPredictedWordsText(allPredictedWordsText);
+
+            UIUpdater.CreateLabelsForCandidateWords(sortedWordsByPriority);
         }
 
         public void AdjustExistingWords(List<ConnectedComponent> latestRemovedComponents, ConnectedComponent latestAddedComponent, List<String> possibleChars, List<int> positionsOfChosenChars = null)

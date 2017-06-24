@@ -41,6 +41,7 @@ namespace HandwritingRecognition.Writing
         private Dictionary<int, List<int>> m_positionsOfChosenChars = null; // numbers between [0-61]
         private Dictionary<int, ConnectedComponent> m_connectedComponents = null;
         private List<int> m_orderOfComponents = null;
+        private int m_priority = 0;
         
         public Word()
         {
@@ -48,14 +49,16 @@ namespace HandwritingRecognition.Writing
             m_positionsOfChosenChars = new Dictionary<int, List<int>>();
             m_connectedComponents = new Dictionary<int, ConnectedComponent>();
             m_orderOfComponents = new List<int>();
+            m_priority = 0;
         }
 
-        public Word(Word oldWord, Dictionary<int, List<int>> newPositionsOfChosenChars)
+        public Word(Word oldWord, Dictionary<int, List<int>> newPositionsOfChosenChars, int priority = 0)
         {
             this.m_possibleChars = oldWord.m_possibleChars;
             this.m_positionsOfChosenChars = newPositionsOfChosenChars;
             this.m_connectedComponents = oldWord.m_connectedComponents;
             this.m_orderOfComponents = oldWord.m_orderOfComponents;
+            this.m_priority = priority;
         }
 
         public Dictionary<int, List<String>> GetPossibleCharsDictionary()
@@ -92,6 +95,17 @@ namespace HandwritingRecognition.Writing
             }
         }
 
+        public int Priority
+        {
+            get
+            {
+                return m_priority;
+            }
+            set
+            {
+                m_priority = value;
+            }
+        }
         public void RemoveConnectedComponents(List<ConnectedComponent> connectedComponentsToRemove)
         {
             for (int i = 0; i < connectedComponentsToRemove.Count; i++)
@@ -137,6 +151,22 @@ namespace HandwritingRecognition.Writing
             }
 
             return ret;
+        }
+
+        internal void SetPriority(LanguageDictionary.PrefixType prefixType)
+        {
+            switch (prefixType)
+            {
+                case LanguageDictionary.PrefixType.Word:
+                    this.m_priority= 20;
+                    break;
+                case LanguageDictionary.PrefixType.Prefix:
+                    this.m_priority = 10;
+                    break;
+                case LanguageDictionary.PrefixType.NotExists:
+                    this.m_priority = 0;
+                    break;
+            }
         }
 
         public int GetGlobalLeft()
