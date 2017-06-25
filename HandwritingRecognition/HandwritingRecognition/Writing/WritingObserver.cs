@@ -23,7 +23,7 @@ namespace HandwritingRecognition.Writing
                 {
                     return 1;
                 }
-                return x.Accuracies.CompareTo(y.Accuracies);
+                return x.Accuracies.CompareTo(y.Accuracies); // return 0; IF THINGS DON'T WORK
             }
         }
 
