@@ -202,23 +202,45 @@ namespace HandwritingRecognition.ImageProcessing
 
         private void AdjustExistingComponents(int newComponentIndex, List<Point> newComponentPointsList, HashSet<int> oldConnectedComponentsIDs)
         {
-            //List<int> indicesToDelete = new List<int>();
-            //for(int i = 0; i < m_existingConnectedComponents.Count; i++)
-            //{
-            //    ConnectedComponent currentComponent = m_existingConnectedComponents[i];
-            //    if (oldConnectedComponentsIDs.Contains(currentComponent.ID))
-            //    {
-            //        indicesToDelete.Add(i);
-            //    }
-            //}
-
-            //for (int i = 0; i < indicesToDelete.Count; i++ )
-            //{
-            //    int indexToDelete = indicesToDelete[i];
-            //    m_existingConnectedComponents.RemoveAt(indexToDelete);
-            //}
+            // check if newComponentPointsList is a point
+            if (CheckIfListOfPointsIsAPoint(newComponentPointsList))
+            {
+                // check the pixels below this points.
+                Point leftPoint = new Point();
+                Point rightPoint = new Point();
+                GetLeftAndRightExtremes(newComponentPointsList, ref leftPoint, ref rightPoint);
+                int connectedComponentIndexOfPoint = newComponentIndex;
+                int connectedComponentIndexSearched = -1;
+                Point aPointInSearchedComponent = new Point();
+                bool stop = false;
+                for (int i = Math.Max(leftPoint.X, rightPoint.X); !stop; i++)
+                {
+                    if (i >= m_height)
+                    {
+                        stop = true;
+                        break;
+                    }
+                    for (int j = leftPoint.Y - 3; j <= rightPoint.Y + 2; j++) // -3, +2 = a little extension for search area below point
+                    {
+                        if (m_connectedComponentsMatrix[i, j] == 0 || m_connectedComponentsMatrix[i, j] == connectedComponentIndexOfPoint)
+                        {
+                            continue;
+                        }
+                        connectedComponentIndexSearched = m_connectedComponentsMatrix[i, j];
+                        stop = true;
+                        aPointInSearchedComponent = new Point(i, j);
+                        break;
+                    }
+                }
+                if (connectedComponentIndexSearched != -1)
+                {
+                    AddTheSearchedComponentToThePoint(aPointInSearchedComponent, connectedComponentIndexSearched, connectedComponentIndexOfPoint, newComponentPointsList);
+                    oldConnectedComponentsIDs.Add(connectedComponentIndexSearched);
+                }
+            }
 
             m_latestRemovedConnectedComponents = m_existingConnectedComponents.FindAll(x => oldConnectedComponentsIDs.Contains(x.ID));
+            ObtainTheNewPointsForTheNewComponent(ref newComponentPointsList, oldConnectedComponentsIDs); // COMMENT IF BAD THINGS HAPPEN
             m_existingConnectedComponents.RemoveAll(x => oldConnectedComponentsIDs.Contains(x.ID));
 
             ConnectedComponent newComponent = new ConnectedComponent(newComponentIndex, newComponentPointsList);
@@ -230,6 +252,83 @@ namespace HandwritingRecognition.ImageProcessing
             m_adjustmentsDone.Add(m_adjustmentsDoneCounter, new Tuple<List<ConnectedComponent>, ConnectedComponent>(m_latestRemovedConnectedComponents, m_latestAddedConnectedComponent));
 
             m_existingConnectedComponents.Add(newComponent);
+        }
+
+        private void ObtainTheNewPointsForTheNewComponent(ref List<Point> newComponentPointsList, HashSet<int> oldConnectedComponentsIDs)
+        {
+            if (oldConnectedComponentsIDs.Count == 0)
+            {
+                return;
+            }
+            List<ConnectedComponent> oldComponents = m_existingConnectedComponents.FindAll(x => oldConnectedComponentsIDs.Contains(x.ID));
+            HashSet<Point> newPoints = new HashSet<Point>();
+            for (int i = 0; i < newComponentPointsList.Count; i++)
+            {
+                newPoints.Add(newComponentPointsList[i]);
+            }
+
+            for (int i = 0; i < oldComponents.Count; i++)
+            {
+                List<Point> aux = oldComponents[i].GetGlobalPoints();
+                for (int j = 0; j < aux.Count; j++)
+                {
+                    newPoints.Add(aux[j]);
+                }
+            }
+            newComponentPointsList = newPoints.ToList();
+        }
+
+        private void AddTheSearchedComponentToThePoint(Point aPointInSearchedComponent, int connectedComponentIndexSearched, int connectedComponentIndexOfPoint, List<Point> newComponentPointsList)
+        {
+            Queue<Point> queue = new Queue<Point>();
+            queue.Enqueue(aPointInSearchedComponent);
+            m_connectedComponentsMatrix[aPointInSearchedComponent.X, aPointInSearchedComponent.Y] = connectedComponentIndexOfPoint;
+            while(queue.Count > 0)
+            {
+                Point currentPoint = queue.Dequeue();
+                newComponentPointsList.Add(currentPoint);
+                for (int i = 0; i < 8; i++)
+                {
+                    Point nextPoint = new Point(currentPoint.X + dx8[i], currentPoint.Y + dy8[i]);
+                    if (IsInternalPoint(nextPoint) && m_connectedComponentsMatrix[nextPoint.X, nextPoint.Y] == connectedComponentIndexSearched)
+                    {
+                        m_connectedComponentsMatrix[nextPoint.X, nextPoint.Y] = connectedComponentIndexOfPoint;
+                        queue.Enqueue(nextPoint);
+                    }
+                }
+            }
+        }
+
+        private void GetLeftAndRightExtremes(List<Point> pointsList, ref Point leftPoint, ref Point rightPoint)
+        {
+            leftPoint = pointsList[0];
+            rightPoint = pointsList[0];
+            for (int i = 0; i < pointsList.Count; i++)
+            {
+                if (pointsList[i].Y < leftPoint.Y)
+                {
+                    leftPoint = pointsList[i];
+                }
+                if (pointsList[i].Y > rightPoint.Y)
+                {
+                    rightPoint = pointsList[i];
+                }
+            }
+        }
+
+        private bool CheckIfListOfPointsIsAPoint(List<Point> newComponentPointsList)
+        {
+            return true; // COMMENT IF BAD THINGS HAPPEN
+            ConnectedComponent auxComponent = new ConnectedComponent(-1, newComponentPointsList);
+            auxComponent.NormalizeUsingTranslation();
+
+            CharacterImage chrImg = new CharacterImage(auxComponent);
+            chrImg.NormalizeTo32x32(CharacterImage.NormalizeTo32x32Type.UnbiasedRatio);
+            chrImg.MakeOnlyBlackAndWhite();
+            chrImg.ThickenBlackPixels();
+
+            return chrImg.CheckIfIsPoint();
+            //return false;
         }
 
         public List<ConnectedComponent> GetAllConnectedComponentsAsOneUsingBoundingBox(Bitmap bmp)

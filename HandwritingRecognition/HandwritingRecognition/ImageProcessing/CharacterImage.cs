@@ -246,5 +246,31 @@ namespace HandwritingRecognition.ImageProcessing
         {
             m_bitmap.Save(pathForSaving + imageName + ".png", ImageFormat.Png);
         }
+
+        public bool CheckIfIsPoint()
+        {
+            int padding = 6;
+            int blackPixels = 0, notBlackPixels = 0;
+            for (int i = padding; i < m_bitmap.Height - padding; i++)
+            {
+                for (int j = padding; j < m_bitmap.Width - padding; j++)
+                {
+                    if (m_bitmap.GetPixel(j, i).ToArgb() == Color.Black.ToArgb())
+                    {
+                        blackPixels++;
+                    }
+                    else
+                    {
+                        notBlackPixels++;
+                    }
+                }
+            }
+            int totalPixels = blackPixels + notBlackPixels;
+            if (1.0 * blackPixels / totalPixels < 0.95)
+            {
+                return false;
+            }
+            return true;
+        }
     }
 }

@@ -15,6 +15,11 @@ namespace HandwritingRecognition.ImageProcessing
         private int m_globalRight = -1;
         private int m_globalUp = -1;
         private int m_globalBottom = -1;
+
+        private int m_translateAmountX = 0;
+        private int m_translateAmountY = 0;
+        private bool m_isTranslated = false;
+
         private PointF m_globalCenter = new PointF();
 
         // points are stored different from how they are positioned in a bitmap
@@ -23,7 +28,7 @@ namespace HandwritingRecognition.ImageProcessing
         {
             // this constructor must receive unaltered global points
             m_id = index;
-            m_points = points;
+            m_points = new List<Point>(points);
 
             m_globalLeft = m_globalRight = points[0].Y;
             m_globalUp = m_globalBottom = points[0].X;
@@ -95,8 +100,25 @@ namespace HandwritingRecognition.ImageProcessing
             }
         }
 
+        public List<Point> GetGlobalPoints()
+        {
+            List<Point> ret = new List<Point>();
+
+            for(int i = 0; i < m_points.Count; i++)
+            {
+                Point newPoint = new Point(m_points[i].X + m_translateAmountX, m_points[i].Y + m_translateAmountY);
+                ret.Add(newPoint);
+            }
+
+            return ret;
+        }
+
         public void NormalizeUsingTranslation()
         {
+            if (m_isTranslated)
+            {
+                return;
+            }
             int translateAmountX = -1, translateAmountY = -1;
             for (int i = 0; i < this.m_points.Count; i++)
             {
@@ -110,11 +132,14 @@ namespace HandwritingRecognition.ImageProcessing
                     translateAmountY = p.Y;
                 }
             }
+            m_translateAmountX = translateAmountX;
+            m_translateAmountY = translateAmountY;
             this.Translate(-translateAmountX, -translateAmountY);
         }
 
         public void Translate(int amountX, int amountY)
         {
+            m_isTranslated = true;
             for (int i = 0; i < m_points.Count; i++)
             {
                 int newX = this.m_points[i].X + amountX;

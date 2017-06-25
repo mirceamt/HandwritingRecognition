@@ -107,9 +107,8 @@ namespace HandwritingRecognition
         {
             m_canDraw = false;
             m_connectedComponents = connectedComponentsTool.InspectConnectedComponents(m_auxiliaryBitmap);
-            // TODO: sort the connected components according to their position in the panel
+            // TODO: sort the connected components according to their position in the panel. this is already happening in Word class.
 
-            // TODO: refactor this logic
             ConnectedComponent lastConnectedComponent = m_connectedComponents.Last();
             CharacterImage lastImage = new CharacterImage(lastConnectedComponent);
             DisplayImageAsAsciiInConsole(lastImage);

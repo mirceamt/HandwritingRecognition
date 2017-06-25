@@ -19,7 +19,7 @@ connManager.connect(host, port)
 if not connManager.isConnected():
     print("Could not connect to main programm!")
     print("press enter to close python client")
-    _ = input()
+    #_ = input()
     exit()
 
 cnnClassifier.Load(r"C:\HandwritingRecognition\CommonResources\HandwritingRecognitionCNNPath.txt")
@@ -66,4 +66,4 @@ while True:
     #    print(receviedBytes[i], )
 
 print("press enter to close python client")
-_ = input()
+#_ = input()
