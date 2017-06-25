@@ -41,6 +41,7 @@ namespace HandwritingRecognition.Writing
         private Dictionary<int, List<int>> m_positionsOfChosenChars = null; // numbers between [0-61]
         private Dictionary<int, ConnectedComponent> m_connectedComponents = null;
         private List<int> m_orderOfComponents = null;
+        private string accuracies = "";
         private int m_priority = 0;
         
         public Word()
@@ -124,9 +125,22 @@ namespace HandwritingRecognition.Writing
             m_orderOfComponents.Sort(new ConnectedComponentComparer(this));
         }
 
+        public string Accuracies
+        {
+            get
+            {
+                if (accuracies == "")
+                {
+                    this.ToString();
+                }
+                return accuracies;
+            }
+        }
+
         public override String ToString()
         {
             SortComponents();
+            accuracies = "";
             String ret = "";
             for (int i = 0; i < m_orderOfComponents.Count; i++)
             {
@@ -141,6 +155,7 @@ namespace HandwritingRecognition.Writing
                 for (int j = 0; j < currentPossibleChars.Count; j++)
                 {
                     ret += currentPossibleChars[j][currentPositionsOfChosenChars[j]];
+                    accuracies += currentPositionsOfChosenChars[j].ToString();
                 }
             }
 

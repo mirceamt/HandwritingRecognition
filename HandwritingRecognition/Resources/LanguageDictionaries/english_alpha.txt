@@ -75934,7 +75934,6 @@ czechoslovakians
 czechoslovaks
 czechs
 czigany
-d
 da
 daalder
 dab
@@ -108863,7 +108862,6 @@ ezba
 ezekiel
 ezod
 ezra
-f
 fa
 faade
 faailk
@@ -120755,7 +120753,6 @@ fw
 fwd
 fwelling
 fz
-g
 ga
 gaatch
 gab
@@ -131708,7 +131705,6 @@ gwerziou
 gwine
 gwiniad
 gwyniad
-h
 ha
 haab
 haaf
@@ -159793,7 +159789,6 @@ izzard
 izzards
 izzat
 izzy
-j
 ja
 jaalin
 jaap
@@ -166587,7 +166582,6 @@ kwazoku
 kwela
 kwhr
 kwintra
-l
 la
 laager
 laagered
