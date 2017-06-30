@@ -196,7 +196,7 @@ namespace HandwritingRecognition.Utils
                 label.Text = candidateWords[i].ToString();
                 if (lastLabel == null)
                 {
-                    label.Location = new Point(162, 30);
+                    label.Location = new Point(168, 30);
                 }
                 else
                 {
@@ -207,7 +207,7 @@ namespace HandwritingRecognition.Utils
 
                     if (locationX + labelWidth > windowWidth)
                     {
-                        label.Location = new Point(162, lastLabel.Location.Y + lastLabel.Height + padding);
+                        label.Location = new Point(168, lastLabel.Location.Y + lastLabel.Height + padding);
                     }
                 }
                 
