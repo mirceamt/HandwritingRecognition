@@ -203,8 +203,17 @@ namespace HandwritingRecognition.ImageProcessing
         private void AdjustExistingComponents(int newComponentIndex, List<Point> newComponentPointsList, HashSet<int> oldConnectedComponentsIDs)
         {
             // check if newComponentPointsList is a point
-            if (CheckIfListOfPointsIsAPoint(newComponentPointsList))
+            if (true) //this if can be removed
             {
+                int stepsLimit = 0;
+                if (CheckIfListOfPointsIsAPoint(newComponentPointsList))
+                {
+                    stepsLimit = 50;
+                }
+                else
+                {
+                    stepsLimit = 18;
+                }
                 // check the pixels below this points.
                 Point leftPoint = new Point();
                 Point rightPoint = new Point();
@@ -213,7 +222,7 @@ namespace HandwritingRecognition.ImageProcessing
                 int connectedComponentIndexSearched = -1;
                 Point aPointInSearchedComponent = new Point();
                 bool stop = false;
-                for (int i = Math.Max(leftPoint.X, rightPoint.X), steps = 1; !stop && steps <= 50; i++, steps++)
+                for (int i = Math.Max(leftPoint.X, rightPoint.X), steps = 1; !stop && steps <= stepsLimit; i++, steps++)
                 {
                     if (i >= m_height)
                     {
@@ -322,7 +331,7 @@ namespace HandwritingRecognition.ImageProcessing
 
         private bool CheckIfListOfPointsIsAPoint(List<Point> newComponentPointsList)
         {
-            return true; // COMMENT IF BAD THINGS HAPPEN
+            //return true; // COMMENT IF BAD THINGS HAPPEN
             ConnectedComponent auxComponent = new ConnectedComponent(-1, newComponentPointsList);
             auxComponent.NormalizeUsingTranslation();
 
