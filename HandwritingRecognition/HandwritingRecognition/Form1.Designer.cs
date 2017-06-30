@@ -46,7 +46,7 @@
             this.drawPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.drawPanel.Location = new System.Drawing.Point(335, 209);
             this.drawPanel.Name = "drawPanel";
-            this.drawPanel.Size = new System.Drawing.Size(1920, 321);
+            this.drawPanel.Size = new System.Drawing.Size(2315, 321);
             this.drawPanel.TabIndex = 0;
             this.drawPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.drawPanel_Paint);
             this.drawPanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.drawPanel_MouseDown);
@@ -77,7 +77,7 @@
             // 
             this.statusLabel.AutoSize = true;
             this.statusLabel.ForeColor = System.Drawing.Color.Red;
-            this.statusLabel.Location = new System.Drawing.Point(2069, 549);
+            this.statusLabel.Location = new System.Drawing.Point(2431, 549);
             this.statusLabel.Name = "statusLabel";
             this.statusLabel.Size = new System.Drawing.Size(186, 25);
             this.statusLabel.TabIndex = 16;
@@ -116,7 +116,7 @@
             // 
             this.predictedWordsTextBox.Location = new System.Drawing.Point(335, 7);
             this.predictedWordsTextBox.Name = "predictedWordsTextBox";
-            this.predictedWordsTextBox.Size = new System.Drawing.Size(1920, 31);
+            this.predictedWordsTextBox.Size = new System.Drawing.Size(2315, 31);
             this.predictedWordsTextBox.TabIndex = 22;
             // 
             // panel1
@@ -133,7 +133,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(2268, 583);
+            this.ClientSize = new System.Drawing.Size(2658, 582);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.predictedWordsTextBox);
             this.Controls.Add(this.label2);
