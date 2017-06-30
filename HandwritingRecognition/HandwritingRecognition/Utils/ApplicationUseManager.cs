@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace HandwritingRecognition.Utils
 {
@@ -31,6 +32,11 @@ namespace HandwritingRecognition.Utils
         public event ApplicationUseEventHandler ApplicationReady;
         public event ApplicationUseEventHandler ApplicationNotReady;
         private static ApplicationUseManager m_instance = new ApplicationUseManager();
+        private static Panel panel = null;
+        public PaintEventHandler drawPanelPaintEventHandler = null;
+        public MouseEventHandler drawPanelMouseUpEventHandler = null;
+        public MouseEventHandler drawPanelMouseMoveEventHandler = null;
+        public MouseEventHandler drawPanelMouseDownEventHandler = null;
         private ApplicationUseManager()
         {
             this.ApplicationReady += ApplicationReadyEventHandler;
@@ -59,12 +65,29 @@ namespace HandwritingRecognition.Utils
         {
             Logger.LogInfo("Application Ready To Use", Color.Green);
             StatusManager.SetStatus("Status: Ready", Color.Green);
+            panel.Paint += this.drawPanelPaintEventHandler;
+            panel.MouseDown += this.drawPanelMouseDownEventHandler;
+            panel.MouseMove += this.drawPanelMouseMoveEventHandler;
+            panel.MouseUp += this.drawPanelMouseUpEventHandler;
+        }
+
+        public void Initialize(Form1 x)
+        {
+            panel = x.drawPanelPublic;
+            drawPanelPaintEventHandler = x.drawPanelPaintEventHandler;
+            drawPanelMouseUpEventHandler = x.drawPanelMouseUpEventHandler;
+            drawPanelMouseMoveEventHandler = x.drawPanelMouseMoveEventHandler;
+            drawPanelMouseDownEventHandler = x.drawPanelMouseDownEventHandler;
         }
 
         private void ApplicationNotReadyEventHandler(object o, ApplicationUseEventArgs e)
         {
             Logger.LogError("Application cannot be used. Please start Python Client!", Color.Red);
             StatusManager.SetStatus("Status: Not Ready", Color.Red);
+            panel.Paint -= this.drawPanelPaintEventHandler;
+            panel.MouseDown -= this.drawPanelMouseDownEventHandler;
+            panel.MouseMove -= this.drawPanelMouseMoveEventHandler;
+            panel.MouseUp -= this.drawPanelMouseUpEventHandler;
         }
     }
 }
