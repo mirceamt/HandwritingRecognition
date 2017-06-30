@@ -213,15 +213,19 @@ namespace HandwritingRecognition.ImageProcessing
                 int connectedComponentIndexSearched = -1;
                 Point aPointInSearchedComponent = new Point();
                 bool stop = false;
-                for (int i = Math.Max(leftPoint.X, rightPoint.X); !stop; i++)
+                for (int i = Math.Max(leftPoint.X, rightPoint.X), steps = 1; !stop && steps <= 50; i++, steps++)
                 {
                     if (i >= m_height)
                     {
                         stop = true;
                         break;
                     }
-                    for (int j = leftPoint.Y - 3; j <= rightPoint.Y + 2; j++) // -3, +2 = a little extension for search area below point
+                    for (int j = leftPoint.Y - 1; j <= rightPoint.Y + 1; j++) // -3, +2 = a little extension for search area below point
                     {
+                        if (!IsInternalPoint(new Point(i, j)))
+                        {
+                            continue;
+                        }
                         if (m_connectedComponentsMatrix[i, j] == 0 || m_connectedComponentsMatrix[i, j] == connectedComponentIndexOfPoint)
                         {
                             continue;
