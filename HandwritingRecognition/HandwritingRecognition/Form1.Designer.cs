@@ -37,9 +37,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.predictedWordsTextBox = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.testConnectedComponentsWindowButton = new System.Windows.Forms.Button();
-            this.sendBytesToPythonDebugButton = new System.Windows.Forms.Button();
-            this.collectNewDataButton = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -68,7 +65,7 @@
             // 
             // startPythonClientButton
             // 
-            this.startPythonClientButton.Location = new System.Drawing.Point(16, 98);
+            this.startPythonClientButton.Location = new System.Drawing.Point(16, 176);
             this.startPythonClientButton.Name = "startPythonClientButton";
             this.startPythonClientButton.Size = new System.Drawing.Size(284, 46);
             this.startPythonClientButton.TabIndex = 15;
@@ -124,45 +121,12 @@
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.collectNewDataButton);
             this.panel1.Controls.Add(this.clearButton);
-            this.panel1.Controls.Add(this.testConnectedComponentsWindowButton);
-            this.panel1.Controls.Add(this.sendBytesToPythonDebugButton);
             this.panel1.Controls.Add(this.startPythonClientButton);
             this.panel1.Location = new System.Drawing.Point(12, 144);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(317, 430);
             this.panel1.TabIndex = 23;
-            // 
-            // testConnectedComponentsWindowButton
-            // 
-            this.testConnectedComponentsWindowButton.Location = new System.Drawing.Point(16, 204);
-            this.testConnectedComponentsWindowButton.Name = "testConnectedComponentsWindowButton";
-            this.testConnectedComponentsWindowButton.Size = new System.Drawing.Size(284, 67);
-            this.testConnectedComponentsWindowButton.TabIndex = 13;
-            this.testConnectedComponentsWindowButton.Text = "Display Connected Components";
-            this.testConnectedComponentsWindowButton.UseVisualStyleBackColor = true;
-            this.testConnectedComponentsWindowButton.Click += new System.EventHandler(this.testConnectedComponentsWindowButton_Click);
-            // 
-            // sendBytesToPythonDebugButton
-            // 
-            this.sendBytesToPythonDebugButton.Location = new System.Drawing.Point(16, 150);
-            this.sendBytesToPythonDebugButton.Name = "sendBytesToPythonDebugButton";
-            this.sendBytesToPythonDebugButton.Size = new System.Drawing.Size(284, 48);
-            this.sendBytesToPythonDebugButton.TabIndex = 14;
-            this.sendBytesToPythonDebugButton.Text = "Send Bytes To Python";
-            this.sendBytesToPythonDebugButton.UseVisualStyleBackColor = true;
-            this.sendBytesToPythonDebugButton.Click += new System.EventHandler(this.sendBytesToPythonDebugButton_Click);
-            // 
-            // collectNewDataButton
-            // 
-            this.collectNewDataButton.Location = new System.Drawing.Point(16, 47);
-            this.collectNewDataButton.Name = "collectNewDataButton";
-            this.collectNewDataButton.Size = new System.Drawing.Size(284, 45);
-            this.collectNewDataButton.TabIndex = 21;
-            this.collectNewDataButton.Text = "Collect New Data";
-            this.collectNewDataButton.UseVisualStyleBackColor = true;
-            this.collectNewDataButton.Click += new System.EventHandler(this.collectNewDataButton_Click);
             // 
             // Form1
             // 
@@ -201,9 +165,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox predictedWordsTextBox;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Button collectNewDataButton;
-        private System.Windows.Forms.Button testConnectedComponentsWindowButton;
-        private System.Windows.Forms.Button sendBytesToPythonDebugButton;
     }
 }
 
