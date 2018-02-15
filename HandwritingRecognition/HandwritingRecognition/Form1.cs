@@ -34,6 +34,13 @@ namespace HandwritingRecognition
 
         LanguageDictionary languageDictionary = new LanguageDictionary();
 
+        public Panel drawPanelPublic = null;
+        public PaintEventHandler drawPanelPaintEventHandler = null;
+        public MouseEventHandler drawPanelMouseUpEventHandler = null;
+        public MouseEventHandler drawPanelMouseMoveEventHandler = null;
+        public MouseEventHandler drawPanelMouseDownEventHandler = null;
+
+
         public Form1()
         {
             InitializeComponent();
@@ -48,7 +55,15 @@ namespace HandwritingRecognition
             
             this.FormClosed += Form1_FormClosed;
 
+            this.drawPanelPublic = this.drawPanel;
+            drawPanelPaintEventHandler = new PaintEventHandler(this.drawPanel_Paint);
+            drawPanelMouseUpEventHandler = new MouseEventHandler(this.drawPanel_MouseUp);
+            drawPanelMouseMoveEventHandler = new MouseEventHandler(this.drawPanel_MouseMove);
+            drawPanelMouseDownEventHandler = new MouseEventHandler(this.drawPanel_MouseDown);
+
             ApplicationUseManager appUseManagerInstance = ApplicationUseManager.Instance;
+            
+            appUseManagerInstance.Initialize(this);
             appUseManagerInstance.TriggerApplicationNotReady();
 
             ConnectionManager.StartListeningToConnections();
@@ -105,10 +120,14 @@ namespace HandwritingRecognition
 
         private void drawPanel_MouseUp(object sender, MouseEventArgs e)
         {
+            if (m_canDraw == false)
+            {
+                return;
+            }
             m_canDraw = false;
             m_connectedComponents = connectedComponentsTool.InspectConnectedComponents(m_auxiliaryBitmap);
             // TODO: sort the connected components according to their position in the panel. this is already happening in Word class.
-
+            
             ConnectedComponent lastConnectedComponent = m_connectedComponents.Last();
             CharacterImage lastImage = new CharacterImage(lastConnectedComponent);
             DisplayImageAsAsciiInConsole(lastImage);
