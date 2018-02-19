@@ -58,3 +58,4 @@
 #*.rtf   diff=astextplain
 #*.RTF   diff=astextplain
 HandwritingRecognition/Resources/CNNMetaGraphAndParameters/* filter=lfs diff=lfs merge=lfs -text
+HandwritingRecognition/Resources/CNN[[:space:]]Trained[[:space:]]Model/cnn3-100000.data-00000-of-00001 filter=lfs diff=lfs merge=lfs -text
