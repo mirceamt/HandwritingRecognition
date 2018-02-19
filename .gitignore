@@ -26,7 +26,7 @@ build/
 *_p.c
 *.ilk
 *.meta
-!*/Resources/*.meta
+!*/Resources/*/*.meta
 *.obj
 *.pch
 *.pdb
